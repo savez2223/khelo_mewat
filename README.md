@@ -1,4 +1,4 @@
-# Name Of The Site: Northern Sports Academy 
+# Name Of The Site: Mewat_Sport 
 
 ## Features of the project:
 It's a website for a sports academy, users can enroll in different courses through online.
@@ -37,7 +37,7 @@ It's a website for a sports academy, users can enroll in different courses throu
 * Express JS
 * MongoDB, CORS, Dotenv, JWT, Stripe 
 ### Here is the live link of the project:
-Click here: [Northern Sports Academy](https://northern-sports-academy.web.app/)
+Click here: [Mewat_Sport](https://northern-sports-academy.web.app/)
 
 
 
