@@ -57,7 +57,7 @@ const Footer = () => {
             <div className="flex flex-col space-y-3 text-base text-white">
               <p className="flex items-center gap-1">
                 <FaMapMarkerAlt />
-                Nuh, Mewat, Haryana, India 122107
+                Nuh, Mewat, Haryana 122107
               </p>
               <p className="flex items-center gap-1">
                 <FaPhoneAlt />
