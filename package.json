@@ -15,7 +15,7 @@
     "@stripe/stripe-js": "^2.2.0",
     "axios": "^1.6.1",
     "daisyui": "^3.9.2",
-    "firebase": "^10.4.0",
+    "firebase": "^10.14.1",
     "framer-motion": "^10.16.4",
     "localforage": "^1.10.0",
     "lottie-react": "^2.4.0",

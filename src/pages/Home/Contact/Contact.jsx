@@ -1,4 +1,4 @@
-import Container from "../../../Components/Container/Container";
+import Container from "../../../components/Container/Container";
 import { FaSquarePhone, FaClock } from "react-icons/fa6";
 import { IoMdPin } from "react-icons/io";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";

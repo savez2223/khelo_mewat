@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { app } from "../firebase/firebase.config";
+import app from "../firebase/firebase.config.js"; // Correct default import
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -23,23 +23,22 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
 
-  /* control theme */
+  // Control theme
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-
-    /* store theme mode in local storage */
-    localStorage.setItem("theme", theme);
+    localStorage.setItem("theme", theme); // Store theme mode in local storage
   }, [theme]);
 
   useEffect(() => {
     if (user) {
       getUser(user.email).then((data) => {
-        console.log("role: ", data);
+        console.log("Role: ", data);
         setRole(data?.role);
       });
     }
@@ -94,12 +93,10 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem("access-token");
         setLoading(false);
       }
-
       console.log(currentUser);
     });
-    return () => {
-      return unsubscribe();
-    };
+
+    return () => unsubscribe();
   }, []);
 
   const authInfo = {
@@ -113,8 +110,11 @@ const AuthProvider = ({ children }) => {
     updateUserProfile,
     resetPassword,
     role,
-    setRole,theme,setTheme
+    setRole,
+    theme,
+    setTheme,
   };
+
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
