@@ -27,7 +27,7 @@ const CoursesPage = () => {
   return (
     <div className="dark:bg-gray-800 pb-10 lg:pb-20 md:pt-20" id="courses">
       <Helmet>
-        <title>Courses</title>
+        <title>Course</title>
       </Helmet>
       <ScrollPageTop />
       <Container>
