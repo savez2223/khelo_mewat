@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
-import Container from "../../../Components/Container/Container";
+import Container from "../../../components/Container/Container";
 import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
 
 const Partners = () => {

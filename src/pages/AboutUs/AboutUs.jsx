@@ -1,6 +1,6 @@
 import React from "react";
 import ScrollPageTop from "../../components/ScrollPageTop/ScrollPageTop";
-import Container from "../../Components/Container/Container";
+import Container from "../../components/Container/Container";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import logo from "../../assets/logo/rlogo1.png";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";

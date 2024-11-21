@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import ScrollPageTop from '../../components/ScrollPageTop/ScrollPageTop';
-import Container from '../../Components/Container/Container';
+import Container from '../../components/Container/Container';
 import SectionHeader from '../../components/SectionHeader/SectionHeader';
 import FadeInAnimation from '../../components/FadeInAnimation/FadeInAnimation';
 import { AuthContext } from '../../providers/AuthProvider';
