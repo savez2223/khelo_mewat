@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "../../Components/Container/Container";
+import Container from "../../components/Container/Container";
 import ScrollPageTop from "../../components/ScrollPageTop/ScrollPageTop";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import { useQuery } from "react-query";
