@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "../../../Components/Container/Container";
+import Container from "../../../components/Container/Container";
 import { motion } from "framer-motion";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
 
