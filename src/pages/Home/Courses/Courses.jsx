@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import Container from "../../../Components/Container/Container";
+import Container from "../../../components/Container/Container";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
 import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
 import CourseCard from "./CourseCard";
@@ -10,12 +10,61 @@ const Courses = () => {
   /* get all course data */
   const { data: courses = [], refetch } = useQuery({
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/courses`);
-      console.log(res.data);
-      return res.data;
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/courses`);
+        console.log(res.data);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        // Fallback to sample courses in case of an error
+        return [
+          {
+            id: 1,
+            course_name: "Football",
+            description:
+              "Master the art of football with our comprehensive courses.",
+            image: "https://i.ibb.co/3MFF6hk/football-5754946-1280.jpg",
+          },
+          {
+            id: 2,
+            course_name: "Tennis",
+            description:
+              "Learn tennis techniques and strategies for all levels.",
+            image: "https://i.ibb.co/zPRD7cj/tennis-5782695-1280.jpg",
+          },
+          {
+            id: 3,
+            course_name: "Cricket",
+            description: "Enhance your cricket skills with expert coaching.",
+            image: "https://i.ibb.co/n1Bvng0/cricket-724621-1280.jpg",
+          },
+          {
+            id: 4,
+            course_name: "Rugby",
+            description:
+              "Experience the thrill of rugby with our specialized training.",
+            image: "https://i.ibb.co/jhG3dX0/kids-5556307-1280.jpg",
+          },
+          {
+            id: 5,
+            course_name: "Swimming",
+            description:
+              "Develop swimming skills with professional instructors.",
+            image: "https://i.ibb.co/bmJZddy/swimming-821622-1280.jpg",
+          },
+          {
+            id: 6,
+            course_name: "Badminton",
+            description:
+              "Improve your badminton techniques and competitive skills.",
+            image: "https://i.ibb.co/r4ncWQP/badminton-1428046-1280.jpg",
+          },
+        ];
+      }
     },
   });
-  /* show only 6 data first */
+
+  /* Show only 6 data first */
   const visibleCourses = courses.slice(0, 6);
 
   return (
@@ -32,8 +81,8 @@ const Courses = () => {
         <FadeInAnimation custom={1}>
           <div className="text-center pb-10 md:pb-0">
             <Link
-              to="/courses"
-              className="btn  bg-amber-500 custom-btn mt-8 text-white "
+              to="/"
+              className="btn bg-amber-500 custom-btn mt-8 text-white"
             >
               See More
             </Link>

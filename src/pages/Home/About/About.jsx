@@ -2,15 +2,12 @@ import React from 'react';
 import Reavel from '../../../components/Reavel/Reavel';
 import FadeInAnimation from '../../../components/FadeInAnimation/FadeInAnimation';
 import SectionHeader from '../../../components/SectionHeader/SectionHeader';
-import Container from '../../../Components/Container/Container';
-import logo from '../../../assets/logo/logo.png'
+import Container from '../../../components/Container/Container';
+import logo from '../../../assets/logo/logo1.png'
 
 const About = () => {
     return (
-      <div
-        className="dark:bg-gray-700 bg-amber-300 pb-10 lg:pb-20"
-        id="about"
-      >
+      <div className="dark:bg-gray-700 bg-amber-300 pb-10 lg:pb-20" id="about">
         <SectionHeader heading={"About Us"}></SectionHeader>
         <Container>
           <div className="grid grid-cols-1 gap-10">
@@ -37,14 +34,14 @@ const About = () => {
                     <p className="dark:text-white text-slate-700">
                       Welcome to{" "}
                       <span className="font-semibold">
-                        The Northern Sports Academy
+                        The Mewat Sports Academy
                       </span>
                       , where passion, dedication, and excellence converge.
                     </p>
                   </Reavel>
                   <Reavel>
                     <p className="dark:text-white text-slate-700">
-                      At Northern Sports Academy, we're more than just a sports
+                      At Mewat Sports Academy, we're more than just a sports
                       organization. We're a community united by a love for
                       sports and a commitment to nurturing the talents and
                       aspirations of athletes from all walks of life.
@@ -55,7 +52,7 @@ const About = () => {
                     <p className="dark:text-white text-slate-700">
                       Whether you're a young athlete with a dream, a parent
                       looking to support your child's passion, or a seasoned
-                      player aiming for new heights, Northern Sports Academy
+                      player aiming for new heights, Mewat Sports Academy
                       welcomes you. Join us on a journey of skill development,
                       camaraderie, and sportsmanship.
                     </p>
@@ -65,7 +62,7 @@ const About = () => {
             </FadeInAnimation>
             <FadeInAnimation>
               <div className="flex flex-col lg:flex-row justify-center items-center gap-10">
-                <div className=''>
+                <div className="">
                   <img
                     className="md:max-w-md min-w-sm rounded-xl mx-auto"
                     loading="lazy"
@@ -122,8 +119,8 @@ const About = () => {
                             Community and Support:
                           </span>{" "}
                           {""}
-                          At Northern Sports Academy, we're more than a team;
-                          we're a family. Our supportive community of athletes,
+                          At Mewat Sports Academy, we're more than a team; we're
+                          a family. Our supportive community of athletes,
                           parents, and coaches creates an atmosphere of
                           encouragement and camaraderie.
                         </li>

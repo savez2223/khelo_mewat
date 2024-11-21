@@ -20,8 +20,8 @@ const Contact = () => {
                   </p>
                 </div>
                 <div className="md:font-semibold md:ps-12">
-                  <p>Phone: +88 01711-22334455</p>
-                  <p>Email: northernsports@inqury.com</p>
+                  <p>Phone: +91 9389678954</p>
+                  <p>Email: Mewatsports@inqury.com</p>
                 </div>
               </div>
               <div className="text-amber-400 dark:text-white bg-white dark:bg-transparent p-3 md:w-9/12 rounded">
@@ -32,8 +32,8 @@ const Contact = () => {
                   </p>
                 </div>
                 <div className="md:font-semibold md:ps-12">
-                  <p>Road-8, Block-A, Mirpur DOHS</p>
-                  <p> Dhaka, Bangladesh</p>
+                  <p>Mewat Sports Academy</p>
+                  <p>Nuh Mewat , Haryana 122107</p>
                 </div>
               </div>
               <div className="text-amber-400 dark:text-white bg-white dark:bg-transparent p-3 md:w-9/12 rounded">

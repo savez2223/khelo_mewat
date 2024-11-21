@@ -107,7 +107,7 @@ const InstructorDetails = () => {
               </p>
               <p>
                 <span className="text-base font-semibold">About: </span>
-                Welcome to Northern sports academy, where excellence meets
+                Welcome to Mewat sports academy, where excellence meets
                 expertise! Meet {instructorData.name}, a seasoned professional
                 dedicated to shaping the next generation of athletes. Embark on
                 a transformative sports journey with {instructorData.name} at

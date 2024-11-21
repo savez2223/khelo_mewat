@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { FaCartShopping } from "react-icons/fa6";
-import logo from '../../../assets/logo/logo.png'
-import rlogo from '../../../assets/logo/rlogo.png'
+import logo from '../../../assets/logo/logo1.png'
+import rlogo from '../../../assets/logo/rlogo1.png'
 import useReadingProgress from '../../../hooks/useReadingProgress';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
