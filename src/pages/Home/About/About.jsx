@@ -3,7 +3,7 @@ import Reavel from '../../../components/Reavel/Reavel';
 import FadeInAnimation from '../../../components/FadeInAnimation/FadeInAnimation';
 import SectionHeader from '../../../components/SectionHeader/SectionHeader';
 import Container from '../../../components/Container/Container';
-import logo from '../../../assets/logo/logo1.png'
+import logo from '../../../assets/logo/logo2.png'
 
 const About = () => {
     return (
@@ -33,15 +33,13 @@ const About = () => {
                   <Reavel>
                     <p className="dark:text-white text-slate-700">
                       Welcome to{" "}
-                      <span className="font-semibold">
-                        The Mewat Sports Academy
-                      </span>
+                      <span className="font-semibold">The MEC Sports Club</span>
                       , where passion, dedication, and excellence converge.
                     </p>
                   </Reavel>
                   <Reavel>
                     <p className="dark:text-white text-slate-700">
-                      At Mewat Sports Academy, we're more than just a sports
+                      At MEC Sports Club, we're more than just a sports
                       organization. We're a community united by a love for
                       sports and a commitment to nurturing the talents and
                       aspirations of athletes from all walks of life.
@@ -52,8 +50,8 @@ const About = () => {
                     <p className="dark:text-white text-slate-700">
                       Whether you're a young athlete with a dream, a parent
                       looking to support your child's passion, or a seasoned
-                      player aiming for new heights, Mewat Sports Academy
-                      welcomes you. Join us on a journey of skill development,
+                      player aiming for new heights, MEC Sports Club welcomes
+                      you. Join us on a journey of skill development,
                       camaraderie, and sportsmanship.
                     </p>
                   </Reavel>
@@ -119,10 +117,10 @@ const About = () => {
                             Community and Support:
                           </span>{" "}
                           {""}
-                          At Mewat Sports Academy, we're more than a team; we're
-                          a family. Our supportive community of athletes,
-                          parents, and coaches creates an atmosphere of
-                          encouragement and camaraderie.
+                          At MEC Sports Club, we're more than a team; we're a
+                          family. Our supportive community of athletes, parents,
+                          and coaches creates an atmosphere of encouragement and
+                          camaraderie.
                         </li>
                       </Reavel>
                     </ul>

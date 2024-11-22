@@ -107,12 +107,12 @@ const InstructorDetails = () => {
               </p>
               <p>
                 <span className="text-base font-semibold">About: </span>
-                Welcome to Mewat sports academy, where excellence meets
-                expertise! Meet {instructorData.name}, a seasoned professional
-                dedicated to shaping the next generation of athletes. Embark on
-                a transformative sports journey with {instructorData.name} at
-                the helm. Whether you're a beginner eager to learn the basics or
-                a seasoned athlete aiming for the next level,{" "}
+                Welcome to MEC Sports Club, where excellence meets expertise!
+                Meet {instructorData.name}, a seasoned professional dedicated to
+                shaping the next generation of athletes. Embark on a
+                transformative sports journey with {instructorData.name} at the
+                helm. Whether you're a beginner eager to learn the basics or a
+                seasoned athlete aiming for the next level,{" "}
                 {instructorData.name} is here to guide you every step of the
                 way.
               </p>

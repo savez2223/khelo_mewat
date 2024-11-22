@@ -3,9 +3,9 @@ import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation
 import InstructorCard from "./InstructorCard";
 import Container from "../../../components/Container/Container";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { getInstructor } from "../../../api/users";
+import AzazSirPhoto from "../../../assets/social/AzazSirPhoto.png";
 
 const InstructorsList = () => {
   const [instructors, setInstructors] = useState([]);
@@ -28,17 +28,9 @@ const InstructorsList = () => {
             },
             {
               id: 2,
-              name: "Sania Mirza",
+              name: "Shakib Al Hasan",
               expertise: "Tennis",
-              image:
-                "https://i.ibb.co/ZYTxMkd/340338606-523493613322329-4969898389106564350-n.jpg",
-            },
-            {
-              id: 3,
-              name: "Saina Nehwal",
-              expertise: "Badminton",
-              image:
-                "https://i.ibb.co/RSvD49q/shuttler-saina-nehwal-during-indian-sports-honour-611860.jpg",
+              image:AzazSirPhoto,
             },
           ]);
         }
@@ -49,24 +41,16 @@ const InstructorsList = () => {
         setInstructors([
           {
             id: 1,
-            name: "Shakib Al Hasan",
-            expertise: "Fitness & Health",
+            name: "Prof. (Dr.) Khwaja M. Rafi",
+            expertise: "Director, MEC",
             image:
-              "https://i.ibb.co/cbwGjGp/384767622-240582351946454-4032876511897592603-n.jpg",
+              "https://github.com/savez2223/Mewat-College/blob/main/public/Director-Sir.jpg?raw=true",
           },
           {
             id: 2,
-            name: "Sania Mirza",
-            expertise: "Tennis",
-            image:
-              "https://i.ibb.co/ZYTxMkd/340338606-523493613322329-4969898389106564350-n.jpg",
-          },
-          {
-            id: 3,
-            name: "Saina Nehwal",
-            expertise: "Badminton",
-            image:
-              "https://i.ibb.co/RSvD49q/shuttler-saina-nehwal-during-indian-sports-honour-611860.jpg",
+            name: "MR. AZAZ KHAN",
+            expertise: "Coach",
+            image: AzazSirPhoto,
           },
         ]);
       });
@@ -79,7 +63,7 @@ const InstructorsList = () => {
     <div className="dark:bg-gray-800 pb-10 lg:pb-20" id="instructors">
       <Container>
         <SectionHeader heading={"Our Instructors"}></SectionHeader>
-        <div className="grid grid-cols-1 md:grid-cols-3  md:gap-10 lg:gap-7 gap-y-10 gap-x-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {visibleInstructors.map((instructor, index) => (
             <FadeInAnimation key={instructor.id} custom={index}>
               <InstructorCard instructor={instructor}></InstructorCard>

@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../../assets/logo/logo1.png'
+import logo from '../../../assets/logo/logo2.png';
 import facebook from '../../../assets/social/facebook.png';
 import instagram from '../../../assets/social/instagram.png';
 import whatsapp from '../../../assets/social/whatsapp.png';
@@ -23,10 +23,11 @@ const Footer = () => {
           <aside>
             <img
               loading="lazy"
-              className="w-36 md:w-44"
+              className="w-25 md:w-32"
               src={logo}
               alt="Logo"
             />
+            <br />
             <p className="-mt-3 text-base font-semibold">
               Let's Conquer Together
             </p>

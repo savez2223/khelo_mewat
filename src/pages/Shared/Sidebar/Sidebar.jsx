@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../../../assets/logo/logo1.png";
-import rlogo from "../../../assets/logo/rlogo1.png";
+import logo from "../../../assets/logo/logo2.png";
+import rlogo from "../../../assets/logo/rlogo2.png";
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import { HiViewGridAdd, HiUser, HiHome, HiOutlineLogout,HiShoppingCart  } from "react-icons/hi";
 import { MdLibraryAddCheck } from "react-icons/md";

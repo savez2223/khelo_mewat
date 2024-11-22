@@ -11,7 +11,7 @@ const TypingEffect = () => {
     
     return (
       <div className="text-white">
-        <h2 className="md:text-6xl text-4xl font-bold">Mewat Sports Academy</h2>
+        <h2 className="md:text-6xl text-4xl font-bold">MEC Sports Club</h2>
         <h4 className="md:text-4xl text-3xl my-5 font-semibold bg-red-500 md:w-4/6 w-11/12 rounded mx-auto py-2.5 px-1">
           Explore the world of sports with us.
         </h4>

@@ -32,7 +32,7 @@ const Contact = () => {
                   </p>
                 </div>
                 <div className="md:font-semibold md:ps-12">
-                  <p>Mewat Sports Academy</p>
+                  <p>MEC Sports Club</p>
                   <p>Nuh Mewat , Haryana 122107</p>
                 </div>
               </div>
