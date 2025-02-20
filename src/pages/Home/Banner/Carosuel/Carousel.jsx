@@ -6,7 +6,7 @@ import cricket from "../../../../assets/banner images/cricket.jpg";
 import vollyball from "../../../../assets/banner images/volleyball.jpg";
 import Tugofwars from "../../../../assets/banner images/Tugofwars.jpg";
 import runner from "../../../../assets/banner images/runner.jpg";
-import Wrestling from "../../../../assets/banner images/Wrestling.jpg";
+import Wrestling from "../../../../assets/banner images/wrestling.jpg";
 
 const Carousel = () => {
   return (
