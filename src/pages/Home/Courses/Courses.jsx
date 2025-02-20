@@ -43,7 +43,8 @@ const Courses = () => {
             course_name: "Rugby",
             description:
               "Experience the thrill of rugby with our specialized training.",
-            image: "https://i.ibb.co/jhG3dX0/kids-5556307-1280.jpg",
+            image:
+              "https://pixabay.com/photos/runner-track-athlete-relay-race-1544448/",
           },
           {
             id: 5,
@@ -52,20 +53,13 @@ const Courses = () => {
               "Develop swimming skills with professional instructors.",
             image: "https://i.ibb.co/bmJZddy/swimming-821622-1280.jpg",
           },
-          {
-            id: 6,
-            course_name: "Badminton",
-            description:
-              "Improve your badminton techniques and competitive skills.",
-            image: "https://i.ibb.co/r4ncWQP/badminton-1428046-1280.jpg",
-          },
         ];
       }
     },
   });
 
   /* Show only 6 data first */
-  const visibleCourses = courses.slice(0, 6);
+  const visibleCourses = courses.slice(0, 5);
 
   return (
     <div className="dark:bg-gray-800 pb:10 md:pb-20" id="programmes">

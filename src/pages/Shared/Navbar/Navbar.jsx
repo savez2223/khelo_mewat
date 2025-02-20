@@ -1,17 +1,17 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { FaCartShopping } from "react-icons/fa6";
-import logo from '../../../assets/logo/logo2.png'
-import rlogo from '../../../assets/logo/rlogo2.png'
-import useReadingProgress from '../../../hooks/useReadingProgress';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../providers/AuthProvider';
-import ActiveLink from '../../../components/ActiveLink/ActiveLink';
-import useCart from '../../../hooks/useCart';
+import logo from "../../../assets/logo/logo2.png";
+import rlogo from "../../../assets/logo/rlogo2.png";
+import useReadingProgress from "../../../hooks/useReadingProgress";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
+import ActiveLink from "../../../components/ActiveLink/ActiveLink";
+import useCart from "../../../hooks/useCart";
 
 const Navbar = ({ isHomePage }) => {
-  const { user,role, logOut,theme,setTheme } = useContext(AuthContext);
+  const { user, role, logOut, theme, setTheme } = useContext(AuthContext);
   /* for scrolling progress  */
   const completion = useReadingProgress();
   /* const [theme, setTheme] = useState(localStorage.getItem("theme") || "light"); */
@@ -49,10 +49,7 @@ const Navbar = ({ isHomePage }) => {
         <ActiveLink to="/">Home</ActiveLink>
       </li>
       <li>
-        <ActiveLink to="/courses">Courses</ActiveLink>
-      </li>
-      <li>
-        <ActiveLink to="/instructors">Instructors</ActiveLink>
+        <ActiveLink to="/courses">Games</ActiveLink>
       </li>
       <li>
         <ActiveLink to="/aboutus">About Us</ActiveLink>
@@ -109,7 +106,7 @@ const Navbar = ({ isHomePage }) => {
     <>
       {/* for small device */}
       <div className="md:hidden bg-red-500 flex justify-center items-center py-2">
-        <Link to='/'>
+        <Link to="/">
           <img className="w-14" src={logo} alt="logo" />
         </Link>
       </div>

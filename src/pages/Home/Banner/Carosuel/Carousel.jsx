@@ -1,7 +1,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Navigation } from "swiper/modules";
 import "swiper/css";
-import './Carousel.css'
+import "./Carousel.css";
+import cricket from "../../../../assets/banner images/cricket.jpg";
+import vollyball from "../../../../assets/banner images/volleyball.jpg";
+import Tugofwars from "../../../../assets/banner images/Tugofwars.jpg";
+import runner from "../../../../assets/banner images/runner.jpg";
+import Wrestling from "../../../../assets/banner images/Wrestling.jpg";
 
 const Carousel = () => {
   return (
@@ -28,29 +33,34 @@ const Carousel = () => {
           modules={[Autoplay, EffectCoverflow]}
         >
           <SwiperSlide>
-            <img src="https://i.ibb.co/ZWxBmcX/football.jpg" alt="football" className="relative"/>
-            <p className="absolute z-10 bottom-5 right-16 text-white font-semibold text-3xl">Football</p>
+            <img src={cricket} alt="Cricket" className="relative" />
+            <p className="absolute z-10 bottom-5 right-16 text-white font-semibold text-3xl">
+              Cricket
+            </p>
           </SwiperSlide>
           <SwiperSlide>
-            <img src="https://i.ibb.co/ncXXSFB/cricket.jpg" alt="cricket" />
+            <img src={vollyball} alt="Volley Ball" className="relative" />
+            <p className="absolute z-10 bottom-5 right-16 text-white font-semibold text-3xl">
+              Volley Ball
+            </p>
           </SwiperSlide>
           <SwiperSlide>
-            <img src="https://i.ibb.co/XsB8Sz0/tennis.jpg" alt="tennis" />
+            <img src={Tugofwars} alt="Tug of war" className="relative" />
+            <p className="absolute z-10 bottom-5 right-16 text-white font-semibold text-3xl">
+              Tug of war
+            </p>
           </SwiperSlide>
           <SwiperSlide>
-            <img src="https://i.ibb.co/jrsFT7h/badminton.jpg" alt="badminton" />
+            <img src={Wrestling} alt="Wrestling" className="relative" />
+            <p className="absolute z-10 bottom-5 right-16 text-white font-semibold text-3xl">
+              Wrestling{" "}
+            </p>
           </SwiperSlide>
           <SwiperSlide>
-            <img src="https://i.ibb.co/YXmyL1y/rugby.jpg" alt="rugby" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://i.ibb.co/W2wKzYt/baseball.jpg" alt="baseball" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://i.ibb.co/3df9RTb/basketball.jpg" alt="basketball" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://i.ibb.co/njFx9Pg/swimming.jpg" alt="swimming" />
+            <img src={runner} alt="Athletics (Race)" className="relative" />
+            <p className="absolute z-10 bottom-5 right-16 text-white font-semibold text-3xl">
+              Athletics (Race)
+            </p>
           </SwiperSlide>
         </Swiper>
       </div>
