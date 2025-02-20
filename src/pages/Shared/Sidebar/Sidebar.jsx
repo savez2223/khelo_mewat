@@ -1,9 +1,14 @@
-import React, {useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../../../assets/logo/logo2.png";
-import rlogo from "../../../assets/logo/rlogo2.png";
+import logo from "../../../assets/logo/logom.png";
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
-import { HiViewGridAdd, HiUser, HiHome, HiOutlineLogout,HiShoppingCart  } from "react-icons/hi";
+import {
+  HiViewGridAdd,
+  HiUser,
+  HiHome,
+  HiOutlineLogout,
+  HiShoppingCart,
+} from "react-icons/hi";
 import { MdLibraryAddCheck } from "react-icons/md";
 import { FaUsersCog } from "react-icons/fa";
 import { AuthContext } from "../../../providers/AuthProvider";
@@ -13,7 +18,7 @@ import StudentMenu from "../../Dashboard/Menu/StudentMenu";
 import useRole from "../../../hooks/useRole";
 
 const Sidebar = () => {
-  const { user, logOut} = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const [userData] = useRole();
 
@@ -28,14 +33,13 @@ const Sidebar = () => {
     navigate("/");
   };
 
-
   return (
     <>
       {/* Small Screen Navbar */}
       <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
         <div>
           <div className="block cursor-pointer p-4 font-bold">
-            <img className="w-14" src={rlogo} alt="" />
+            <img className="w-14" src={logo} alt="" />
           </div>
         </div>
 

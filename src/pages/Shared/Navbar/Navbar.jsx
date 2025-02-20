@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { FaCartShopping } from "react-icons/fa6";
-import logo from "../../../assets/logo/logo2.png";
-import rlogo from "../../../assets/logo/rlogo2.png";
+import logo from "../../../assets/logo/logom.png";
 import useReadingProgress from "../../../hooks/useReadingProgress";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
@@ -154,11 +153,11 @@ const Navbar = ({ isHomePage }) => {
             className="cursor-pointer normal-case text-xl hidden lg:block"
           >
             {navbarBg !== "transparent" ? (
-              <img className="w-20" src={rlogo} alt="" />
-            ) : !isHomePage ? (
-              <img className="w-20" src={rlogo} alt="" />
-            ) : (
               <img className="w-20" src={logo} alt="" />
+            ) : !isHomePage ? (
+              <img className="w-20" src={logo} alt="" />
+            ) : (
+              <img className="w-28" src={logo} alt="" />
             )}
           </Link>
         </div>

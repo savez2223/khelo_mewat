@@ -1,17 +1,22 @@
-import { useContext, useEffect, useState } from 'react';
-import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import Container from '../../components/Container/Container';
-import SectionHeader from '../../components/SectionHeader/SectionHeader';
-import FadeInAnimation from '../../components/FadeInAnimation/FadeInAnimation';
-import ScrollPageTop from '../../components/ScrollPageTop/ScrollPageTop';
-import { AuthContext } from '../../providers/AuthProvider';
-import useCart from '../../hooks/useCart';
-import usePayment from '../../hooks/usePayment';
-import toast from 'react-hot-toast';
-import { Helmet } from 'react-helmet-async';
+import { useContext, useEffect, useState } from "react";
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import Container from "../../components/Container/Container";
+import SectionHeader from "../../components/SectionHeader/SectionHeader";
+import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
+import ScrollPageTop from "../../components/ScrollPageTop/ScrollPageTop";
+import { AuthContext } from "../../providers/AuthProvider";
+import useCart from "../../hooks/useCart";
+import usePayment from "../../hooks/usePayment";
+import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const InstructorDetails = () => {
-  const {user,role} = useContext(AuthContext);
+  const { user, role } = useContext(AuthContext);
   //console.log(role);
   const instructorData = useLoaderData();
   const [courses, setCourses] = useState([]);
@@ -29,50 +34,49 @@ const InstructorDetails = () => {
       });
   }, [instructorData.email]);
 
-    const isCourseInCart =
-      cart.some((item) => item.courseName) ===
-      courses.some((course) => course.course_name);
+  const isCourseInCart =
+    cart.some((item) => item.courseName) ===
+    courses.some((course) => course.course_name);
 
-    const isCourseEnrolled = payments.some((payment) =>
-      payment.items.some((item) =>
-        courses.some((course) => course.course_name === item.itemsName)
-      )
-    );
+  const isCourseEnrolled = payments.some((payment) =>
+    payment.items.some((item) =>
+      courses.some((course) => course.course_name === item.itemsName)
+    )
+  );
 
-    const handleAddToCart = (course) => {
-      if (user && user?.email) {
-        const cardtData = {
-          courseId: course._id,
-          courseName: course.course_name,
-          image: course.image,
-          price: course.price,
-          email: user?.email,
-          instructorName: course?.instructor_name,
-          instructorEmail: course?.email,
-        };
-        fetch(`${import.meta.env.VITE_API_URL}/carts`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(cardtData),
+  const handleAddToCart = (course) => {
+    if (user && user?.email) {
+      const cardtData = {
+        courseId: course._id,
+        courseName: course.course_name,
+        image: course.image,
+        price: course.price,
+        email: user?.email,
+        instructorName: course?.instructor_name,
+        instructorEmail: course?.email,
+      };
+      fetch(`${import.meta.env.VITE_API_URL}/carts`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(cardtData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.insertedId) {
+            refetch();
+            toast.success("Course Added To Cart Successfully!!!");
+          }
         })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.insertedId) {
-              refetch();
-              toast.success("Course Added To Cart Successfully!!!");
-            }
-          })
-          .catch((error) => {
-            toast.error(error.message);
-          });
-      } else {
-        toast.error("Please Sign In First!!!");
-        navigate("/signin", { state: { from: location } });
-      }
-    };
-
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    } else {
+      toast.error("Please Sign In First!!!");
+      navigate("/signin", { state: { from: location } });
+    }
+  };
 
   return (
     <div className="dark:bg-gray-800 pb-10 lg:pb-20 md:pt-20" id="instructors">
@@ -107,8 +111,8 @@ const InstructorDetails = () => {
               </p>
               <p>
                 <span className="text-base font-semibold">About: </span>
-                Welcome to MEC Sports Club, where excellence meets expertise!
-                Meet {instructorData.name}, a seasoned professional dedicated to
+                Welcome to Khelo Mewat, where excellence meets expertise! Meet{" "}
+                {instructorData.name}, a seasoned professional dedicated to
                 shaping the next generation of athletes. Embark on a
                 transformative sports journey with {instructorData.name} at the
                 helm. Whether you're a beginner eager to learn the basics or a

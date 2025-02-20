@@ -21,7 +21,7 @@ const Contact = () => {
                 </div>
                 <div className="md:font-semibold md:ps-12">
                   <p>Phone: +91 9389678954</p>
-                  <p>Email: Mewatsports@inqury.com</p>
+                  <p>Email: khelomewat@inqury.com</p>
                 </div>
               </div>
               <div className="text-amber-400 dark:text-white bg-white dark:bg-transparent p-3 md:w-9/12 rounded">
@@ -32,7 +32,7 @@ const Contact = () => {
                   </p>
                 </div>
                 <div className="md:font-semibold md:ps-12">
-                  <p>MEC Sports Club</p>
+                  <p>Khelo Mewat</p>
                   <p>Nuh Mewat , Haryana 122107</p>
                 </div>
               </div>

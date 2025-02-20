@@ -1,18 +1,18 @@
-import React from 'react';
-import logo from '../../../assets/logo/logo2.png';
-import facebook from '../../../assets/social/facebook.png';
-import instagram from '../../../assets/social/instagram.png';
-import whatsapp from '../../../assets/social/whatsapp.png';
-import linkedin from '../../../assets/social/linkedin.png';
-import youtube from '../../../assets/social/youtube.png';
-import { Link } from 'react-router-dom';
+import React from "react";
+import logo from "../../../assets/logo/logom.png";
+import facebook from "../../../assets/social/facebook.png";
+import instagram from "../../../assets/social/instagram.png";
+import whatsapp from "../../../assets/social/whatsapp.png";
+import linkedin from "../../../assets/social/linkedin.png";
+import youtube from "../../../assets/social/youtube.png";
+import { Link } from "react-router-dom";
 import {
   FaMapMarkerAlt,
   FaPhoneAlt,
   FaHeadset,
   FaEnvelope,
 } from "react-icons/fa";
-import FadeInAnimation from '../../../components/FadeInAnimation/FadeInAnimation';
+import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
 
 const Footer = () => {
   const year = new Date().getFullYear();

@@ -2,7 +2,7 @@ import React from "react";
 import ScrollPageTop from "../../components/ScrollPageTop/ScrollPageTop";
 import Container from "../../components/Container/Container";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
-import logo from "../../assets/logo/rlogo2.png";
+import logo from "../../assets/logo/logom.png";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
 
@@ -25,12 +25,11 @@ const AboutUs = () => {
             <FadeInAnimation>
               <p>
                 Welcome to{" "}
-                <span className="font-semibold">The MEC Sports Club</span>,
-                where passion, dedication, and excellence converge. At Mewat
-                Sports Academy, we're more than just a sports organization.
-                We're a community united by a love for sports and a commitment
-                to nurturing the talents and aspirations of athletes from all
-                walks of life.
+                <span className="font-semibold">The Khelo Mewat</span>, where
+                passion, dedication, and excellence converge. At Khelo Mewat ,
+                we're more than just a sports organization. We're a community
+                united by a love for sports and a commitment to nurturing the
+                talents and aspirations of athletes from all walks of life.
               </p>
 
               <br />
@@ -38,11 +37,11 @@ const AboutUs = () => {
               <p>
                 Whether you're a young athlete with a dream, a parent looking to
                 support your child's passion, or a seasoned player aiming for
-                new heights, MEC Sports Club welcomes you. Join us on a journey
-                of skill development, camaraderie, and sportsmanship.
-                Established with the aim of fostering a love for sports and
-                nurturing talent, we provide a comprehensive range of sports
-                courses tailored to individuals of all ages and skill levels.
+                new heights, Khelo Mewat welcomes you. Join us on a journey of
+                skill development, camaraderie, and sportsmanship. Established
+                with the aim of fostering a love for sports and nurturing
+                talent, we provide a comprehensive range of sports courses
+                tailored to individuals of all ages and skill levels.
               </p>
               <br />
               <br />
@@ -95,10 +94,9 @@ const AboutUs = () => {
                       <span className="font-semibold">
                         Community and Support:
                       </span>{" "}
-                      At MEC Sports Club, we're more than a team; we're a
-                      family. Our supportive community of athletes, parents, and
-                      coaches creates an atmosphere of encouragement and
-                      camaraderie.
+                      At Khelo Mewat, we're more than a team; we're a family.
+                      Our supportive community of athletes, parents, and coaches
+                      creates an atmosphere of encouragement and camaraderie.
                     </li>
                   </ul>
                 </div>
@@ -159,10 +157,9 @@ const AboutUs = () => {
                       <span className="font-semibold">
                         Community and Support:
                       </span>{" "}
-                      At MEC Sports Club, we're more than a team; we're a
-                      family. Our supportive community of athletes, parents, and
-                      coaches creates an atmosphere of encouragement and
-                      camaraderie.
+                      At Khelo Mewat, we're more than a team; we're a family.
+                      Our supportive community of athletes, parents, and coaches
+                      creates an atmosphere of encouragement and camaraderie.
                     </li>
                   </ul>
                 </div>
@@ -177,11 +174,10 @@ const AboutUs = () => {
                   Join Our Community:
                 </span>
                 <br />
-                Whether you're a budding athlete or an experienced player, Mewat
-                Sports Academy welcomes you to join our thriving community. Our
-                programs cater to individuals seeking professional training,
-                fitness enthusiasts looking to stay active, and everyone in
-                between.
+                Whether you're a budding athlete or an experienced player, Khelo
+                Mewat welcomes you to join our thriving community. Our programs
+                cater to individuals seeking professional training, fitness
+                enthusiasts looking to stay active, and everyone in between.
               </p>
               <br />
               <p>
@@ -192,8 +188,8 @@ const AboutUs = () => {
                 enrollment details. We're here to support your aspirations and
                 help you achieve your athletic goals. <br />
                 <br />
-                At MEC Sports Club, the pursuit of excellence begins with you.
-                Join us, and let's build a legacy of champions together!
+                At Khelo Mewat, the pursuit of excellence begins with you. Join
+                us, and let's build a legacy of champions together!
               </p>
             </div>
           </FadeInAnimation>
