@@ -14,7 +14,7 @@ const AboutUs = () => {
       </Helmet>
       <ScrollPageTop />
       <Container>
-        <SectionHeader heading={"About MSA"}></SectionHeader>
+        <SectionHeader heading={"About Khelo Mewat"}></SectionHeader>
         <div>
           <FadeInAnimation>
             <div className="flex justify-center items-start md:mb-10 mb-5">
