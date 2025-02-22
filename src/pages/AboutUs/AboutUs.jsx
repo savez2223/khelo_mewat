@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet-async";
 
 const AboutUs = () => {
   return (
-    <div className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-20" id="about-us">
+    <div className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10" id="about-us">
       <Helmet>
         <title>About Us - Khelo Mewat</title>
       </Helmet>
