@@ -18,17 +18,21 @@ const Footer = () => {
   const year = new Date().getFullYear();
   return (
     <div>
-      <footer className="footer py-14 px-10 bg-gray-900 text-base-content">
+      <footer className="footer py-14 px-10 bg-[#39A935] text-base-content">
         <FadeInAnimation custom={1}>
-          <aside>
-            <img
-              loading="lazy"
-              className="w-25 md:w-32"
-              src={logo}
-              alt="Logo"
-            />
+          <aside className="flex flex-col items-center">
+            <div className="relative">
+              <div className="bg-white rounded-full p-3">
+                <img
+                  loading="lazy"
+                  className="w-20 md:w-32" // Smaller on mobile (w-20), larger on md+ (w-32)
+                  src={logo}
+                  alt="Logo"
+                />
+              </div>
+            </div>
             <br />
-            <p className="-mt-3 text-base font-semibold">
+            <p className="-mt-3 text-base font-semibold text-white">
               Let's Conquer Together
             </p>
             <div className="flex justify-center space-x-4 mt-5 py-4">
@@ -57,19 +61,19 @@ const Footer = () => {
             </header>
             <div className="flex flex-col space-y-3 text-base text-white">
               <p className="flex items-center gap-1">
-                <FaMapMarkerAlt />
+                <FaMapMarkerAlt className="text-[#E87722]" />
                 Nuh, Mewat, Haryana 122107
               </p>
               <p className="flex items-center gap-1">
-                <FaPhoneAlt />
+                <FaPhoneAlt className="text-[#E87722]" />
                 +91 9389678954
               </p>
               <p className="flex items-center gap-1">
-                <FaHeadset />
+                <FaHeadset className="text-[#E87722]" />
                 +91 7050068050
               </p>
               <p className="flex items-center gap-1">
-                <FaEnvelope />
+                <FaEnvelope className="text-[#E87722]" />
                 Mewatsports@inqury.com
               </p>
             </div>
@@ -81,16 +85,10 @@ const Footer = () => {
               Quick Links
             </header>
             <div className="flex flex-col space-y-3 text-base text-white">
-              <Link className="link link-hover hover:text-amber-500">Home</Link>
-              <Link className="link link-hover hover:text-amber-500">
-                About Us
-              </Link>
-              <Link className="link link-hover hover:text-amber-500">
-                Programmes
-              </Link>
-              <Link className="link link-hover hover:text-amber-500">
-                Instructors
-              </Link>
+              <Link className="link link-hover hover:text-[#E87722]">Home</Link>
+              <Link className="link link-hover hover:text-[#E87722]">About Us</Link>
+              <Link className="link link-hover hover:text-[#E87722]">Programmes</Link>
+              <Link className="link link-hover hover:text-[#E87722]">Instructors</Link>
             </div>
           </nav>
         </FadeInAnimation>
@@ -109,9 +107,9 @@ const Footer = () => {
                 <input
                   type="text"
                   placeholder="username@site.com"
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full bg-white text-gray-700 border-[#E87722] focus:ring-2 focus:ring-[#E87722]"
                 />
-                <button className="btn bg-amber-500 hover:bg-amber-600 text-white absolute top-0 right-0 rounded-l-none">
+                <button className="btn bg-[#E87722] hover:bg-[#d66b1c] text-white absolute top-0 right-0 rounded-l-none">
                   Subscribe
                 </button>
               </div>
@@ -119,14 +117,14 @@ const Footer = () => {
           </form>
         </FadeInAnimation>
       </footer>
-      <div className="footer-center p-6 bg-gray-900 text-base-content border-t border-slate-500">
+      <div className="footer-center p-6 bg-[#39A935] border-t border-[#E87722] text-white">
         <p>
           Copyright © {year} - All rights reserved. Developed by{" "}
           <a
             href="https://zuridox.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-amber-500 hover:underline"
+            className="text-[#E87722] hover:underline"
           >
             Zuridox
           </a>

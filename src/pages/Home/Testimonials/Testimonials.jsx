@@ -12,35 +12,77 @@ import Container from "../../../components/Container/Container";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("testimonials.json")
-      .then((res) => res.json())
-      .then((data) => setTestimonials(data));
+    const fetchTestimonials = async () => {
+      try {
+        const response = await fetch("testimonials.json");
+        if (!response.ok) {
+          throw new Error("Failed to fetch testimonials");
+        }
+        const data = await response.json();
+        setTestimonials(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
   }, []);
 
   return (
-    <div className="dark:bg-gray-800  pb-10 lg:pb-20">
-      <SectionHeader heading={"Testimonials"}></SectionHeader>
+    <div
+      className="bg-[#F5F6F5] py-10"
+      style={{ backgroundColor: "#F5F6F5" }}
+    >
+      <SectionHeader
+        heading={<span style={{ color: "#39A935" }}>What Our Community Says</span>}
+      />
       <Container>
         <Swiper
-          autoplay={{ delay: 2300, disableOnInteraction: false }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
           speed={800}
           grabCursor={true}
           loop={true}
           pagination={{
+            clickable: true,
             dynamicBullets: true,
+            // Use renderBullet for custom styling instead of invalid class names
+            renderBullet: (index, className) => {
+              return `<span class="${className}" style="background-color: #E87722;"></span>`;
+            },
           }}
           modules={[Autoplay, Pagination]}
           className="mySwiper"
         >
-          {testimonials.map((testimonial, index) => (
-            <FadeInAnimation key={testimonial.id} custom={index}>
-              <SwiperSlide id="testimonials" className="md:!h-72 !h-[22rem]">
-                <TestimonialCard testimonial={testimonial}></TestimonialCard>
+          {loading ? (
+            <div className="text-center text-gray-600 text-lg py-10">
+              Loading testimonials...
+            </div>
+          ) : error ? (
+            <div className="text-center text-red-500 text-lg py-10">
+              Error: {error}
+            </div>
+          ) : testimonials.length > 0 ? (
+            testimonials.map((testimonial) => (
+              <SwiperSlide
+                key={testimonial.id} // Unique key from testimonial data
+                className="flex justify-center items-center py-6"
+              >
+                <FadeInAnimation>
+                  <TestimonialCard testimonial={testimonial} />
+                </FadeInAnimation>
               </SwiperSlide>
-            </FadeInAnimation>
-          ))}
+            ))
+          ) : (
+            <div className="text-center text-gray-600 text-lg py-10">
+              No testimonials available at the moment.
+            </div>
+          )}
         </Swiper>
       </Container>
     </div>

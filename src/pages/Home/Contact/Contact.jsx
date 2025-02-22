@@ -1,99 +1,192 @@
+import React, { useState } from "react";
 import Container from "../../../components/Container/Container";
-import { FaSquarePhone, FaClock } from "react-icons/fa6";
+import { FaPhoneAlt, FaClock } from "react-icons/fa";
 import { IoMdPin } from "react-icons/io";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
 import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // Telegram Bot Integration
+  const sendToTelegram = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSubmitted(false);
+
+    const { name, email, message } = formData;
+
+    // Telegram bot credentials (replace with your own)
+    const botToken = "YOUR_TELEGRAM_BOT_TOKEN"; // e.g., "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
+    const chatId = "YOUR_CHAT_ID"; // e.g., "-1001234567890" or your personal chat ID
+
+    const telegramMessage = `
+      New Contact Form Submission:
+      Name: ${name}
+      Email: ${email}
+      Message: ${message}
+    `;
+
+    try {
+      const response = await fetch(
+        `https://api.telegram.org/bot${botToken}/sendMessage`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: telegramMessage,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send message to Telegram");
+      }
+
+      setSubmitted(true);
+      setFormData({ name: "", email: "", message: "" }); // Reset form
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="dark:bg-gray-700 bg-amber-300 pb-10 lg:pb-20" id="contact">
-      <SectionHeader heading={"Contact Us"}></SectionHeader>
+    <div className="bg-[#F5F6F5] pb-16 lg:pb-24 pt-10" id="contact">
+      <SectionHeader
+        heading={<span style={{ color: "#39A935" }}>Contact Us</span>}
+      />
       <Container>
         <FadeInAnimation>
-          <div className="grid grid-cols-1 md:grid-cols-2 shadow p-4 md:p-8 border-2 border-white gap-4">
-            <div className="space-y-2 md:space-y-5">
-              <div className="text-amber-400 dark:text-white bg-white dark:bg-transparent  p-3 md:w-9/12 rounded">
-                <div className="flex gap-2">
-                  <FaSquarePhone className="text-2xl md:text-4xl" />
-                  <p className="text-lg md:text-xl font-semibold md:font-bold">
-                    Contact
-                  </p>
-                </div>
-                <div className="md:font-semibold md:ps-12">
-                  <p>Phone: +91 9389678954</p>
-                  <p>Email: khelomewat@inqury.com</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-6 md:p-10 shadow-lg bg-white rounded-xl border border-gray-200">
+            {/* Contact Info Section */}
+            <div className="space-y-6">
+              <div className="flex items-start gap-4 p-4 rounded-lg border-l-4 border-[#39A935] shadow-md bg-gray-50">
+                <FaPhoneAlt className="text-3xl text-[#39A935]" />
+                <div>
+                  <p className="text-lg font-semibold text-gray-800">Contact</p>
+                  <p className="text-gray-600">Phone: +91 9389678954</p>
+                  <p className="text-gray-600">Email: khelomewat@inquiry.com</p>
                 </div>
               </div>
-              <div className="text-amber-400 dark:text-white bg-white dark:bg-transparent p-3 md:w-9/12 rounded">
-                <div className="flex gap-2">
-                  <IoMdPin className="text-2xl md:text-4xl" />
-                  <p className="text-lg md:text-xl font-semibold md:font-bold">
-                    Addres
-                  </p>
-                </div>
-                <div className="md:font-semibold md:ps-12">
-                  <p>Khelo Mewat</p>
-                  <p>Nuh Mewat , Haryana 122107</p>
+
+              <div className="flex items-start gap-4 p-4 rounded-lg border-l-4 border-[#E87722] shadow-md bg-gray-50">
+                <IoMdPin className="text-3xl text-[#E87722]" />
+                <div>
+                  <p className="text-lg font-semibold text-gray-800">Address</p>
+                  <p className="text-gray-600">Khelo Mewat</p>
+                  <p className="text-gray-600">Nuh, Mewat, Haryana 122107</p>
                 </div>
               </div>
-              <div className="text-amber-400 dark:text-white bg-white dark:bg-transparent p-3 md:w-9/12 rounded">
-                <div className="flex gap-2">
-                  <FaClock className="text-2xl md:text-4xl" />
-                  <p className="text-lg md:text-xl font-semibold md:font-bold">
-                    Working hours
+
+              <div className="flex items-start gap-4 p-4 rounded-lg border-l-4 border-[#39A935] shadow-md bg-gray-50">
+                <FaClock className="text-3xl text-[#39A935]" />
+                <div>
+                  <p className="text-lg font-semibold text-gray-800">
+                    Working Hours
                   </p>
-                </div>
-                <div className="md:font-semibold md:ps-12">
-                  <p>Sat - Thu: 09:00am - 10:00pm</p>
-                  <p>Friday: 10:00am - 08:00pm</p>
+                  <p className="text-gray-600">Sat - Thu: 09:00 AM - 10:00 PM</p>
+                  <p className="text-gray-600">Friday: 10:00 AM - 08:00 PM</p>
                 </div>
               </div>
             </div>
-            <form className="contact-form pt-4">
-              <div className="mb-4">
+
+            {/* Contact Form Section */}
+            <form
+              onSubmit={sendToTelegram}
+              className="space-y-5 bg-gray-50 p-6 rounded-xl shadow-md border border-gray-200"
+            >
+              <div>
                 <label
-                  className="block text-gray-700 text-base font-semibold dark:text-white mb-1"
+                  className="block text-gray-800 font-semibold mb-1"
                   htmlFor="name"
                 >
                   Your Name
                 </label>
                 <input
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-amber-500 bg-white dark:bg-slate-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#39A935] focus:outline-none bg-white text-gray-700 placeholder-gray-400"
                   type="text"
                   id="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Enter your name"
+                  required
                 />
               </div>
-              <div className="mb-4">
+
+              <div>
                 <label
-                  className="block text-gray-700 text-base font-semibold dark:text-white mb-1"
+                  className="block text-gray-800 font-semibold mb-1"
                   htmlFor="email"
                 >
-                  Email address
+                  Email Address
                 </label>
                 <input
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-amber-500 bg-white dark:bg-slate-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E87722] focus:outline-none bg-white text-gray-700 placeholder-gray-400"
                   type="email"
                   id="email"
-                  placeholder="Enter your email address"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
                 />
               </div>
-              <div className="mb-4">
+
+              <div>
                 <label
-                  className="block text-gray-700 text-base font-semibold dark:text-white mb-1"
+                  className="block text-gray-800 font-semibold mb-1"
                   htmlFor="message"
                 >
                   Message
                 </label>
                 <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-amber-500 bg-white dark:bg-slate-500"
-                  rows="3"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#39A935] focus:outline-none bg-white text-gray-700 placeholder-gray-400"
+                  rows="4"
                   id="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Write your message"
+                  required
                 ></textarea>
               </div>
-              <button className="btn bg-white text-amber-500 border-white hover:border-white hover:bg-gray-100 transition-all duration-200 hover:scale-95 w-full">
-                Submit
+
+              {submitted && (
+                <p className="text-[#39A935] text-center">
+                  Message sent successfully!
+                </p>
+              )}
+              {error && (
+                <p className="text-red-500 text-center">Error: {error}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#39A935] hover:bg-[#2d8a2d]"
+                }`}
+              >
+                {loading ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
