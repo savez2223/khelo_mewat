@@ -8,7 +8,7 @@ const Banner = () => {
       <div
         className="hero min-h-screen !px-0"
         style={{
-          backgroundImage: "url(https://img.freepik.com/free-vector/realistic-abstract-football-background_52683-67578.jpg?t=st=1740224851~exp=1740228451~hmac=2d08f550652eef2b6f2387bd4a6ddea4201729bb8a9591f7022318c863446299&w=1800)",
+          backgroundImage: "url(https://images.pexels.com/photos/30666120/pexels-photo-30666120/free-photo-of-dynamic-soccer-player-dribbling-on-field-at-night.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
         }}
       >
         <div className="hero-overlay bg-opacity-60 dark:bg-opacity-80"></div>
