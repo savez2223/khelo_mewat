@@ -70,7 +70,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-[#F5F6F5] pb-16 lg:pb-24 pt-10" id="contact">
+    <div className="bg-[#F5F6F5] pb-16 lg:pb-8 pt-0" id="contact">
       <SectionHeader
         heading={<span style={{ color: "#39A935" }}>Contact Us</span>}
       />
@@ -103,7 +103,9 @@ const Contact = () => {
                   <p className="text-lg font-semibold text-gray-800">
                     Working Hours
                   </p>
-                  <p className="text-gray-600">Sat - Thu: 09:00 AM - 10:00 PM</p>
+                  <p className="text-gray-600">
+                    Sat - Thu: 09:00 AM - 10:00 PM
+                  </p>
                   <p className="text-gray-600">Friday: 10:00 AM - 08:00 PM</p>
                 </div>
               </div>

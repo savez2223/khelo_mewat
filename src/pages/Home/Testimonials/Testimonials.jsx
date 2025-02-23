@@ -35,12 +35,11 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <div
-      className="bg-[#F5F6F5] py-10"
-      style={{ backgroundColor: "#F5F6F5" }}
-    >
+    <div className="bg-[#F5F6F5] py-0" style={{ backgroundColor: "#F5F6F5" }}>
       <SectionHeader
-        heading={<span style={{ color: "#39A935" }}>What Our Community Says</span>}
+        heading={
+          <span style={{ color: "#39A935" }}>What Our Community Says</span>
+        }
       />
       <Container>
         <Swiper
@@ -71,7 +70,7 @@ const Testimonials = () => {
             testimonials.map((testimonial) => (
               <SwiperSlide
                 key={testimonial.id} // Unique key from testimonial data
-                className="flex justify-center items-center py-6"
+                className="flex justify-center items-center py-0"
               >
                 <FadeInAnimation>
                   <TestimonialCard testimonial={testimonial} />

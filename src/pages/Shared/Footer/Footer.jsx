@@ -86,9 +86,15 @@ const Footer = () => {
             </header>
             <div className="flex flex-col space-y-3 text-base text-white">
               <Link className="link link-hover hover:text-[#E87722]">Home</Link>
-              <Link className="link link-hover hover:text-[#E87722]">About Us</Link>
-              <Link className="link link-hover hover:text-[#E87722]">Programmes</Link>
-              <Link className="link link-hover hover:text-[#E87722]">Instructors</Link>
+              <Link className="link link-hover hover:text-[#E87722]">
+                About Us
+              </Link>
+              <Link className="link link-hover hover:text-[#E87722]">
+                Programmes
+              </Link>
+              <Link className="link link-hover hover:text-[#E87722]">
+                Instructors
+              </Link>
             </div>
           </nav>
         </FadeInAnimation>
@@ -121,7 +127,7 @@ const Footer = () => {
         <p>
           Copyright © {year} - All rights reserved. Developed by{" "}
           <a
-            href="https://zuridox.vercel.app"
+            href="https://zuridox.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#E87722] hover:underline"
