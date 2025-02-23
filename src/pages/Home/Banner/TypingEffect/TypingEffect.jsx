@@ -31,11 +31,11 @@ const TypingEffect = () => {
         <Cursor cursorStyle="|" cursorColor="#E87722" />
       </div>
       <p className="mt-6 mb-8 md:text-lg text-base leading-relaxed max-w-2xl mx-auto">
-        Unlock the true potential of sports in Mewat! Khelo Mewat is dedicated
-        to nurturing young talent with world-class training, infrastructure, and
-        opportunities. Join us in building a strong sports culture and
-        empowering athletes to achieve greatness. Your journey to excellence
-        starts here!
+        The District Administration have been working to promote sports in Nuh,
+        by organizing “Khelo Mewat” sports tournaments. “Khelo Mewat” is a
+        transformative sports initiative aimed at empowering and developing
+        local youth, particularly in rural areas, across the Nuh district of
+        Haryana.
       </p>
     </div>
   );

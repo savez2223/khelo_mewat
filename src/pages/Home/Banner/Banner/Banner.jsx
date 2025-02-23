@@ -8,7 +8,8 @@ const Banner = () => {
       <div
         className="hero min-h-screen !px-0"
         style={{
-          backgroundImage: "url(https://images.pexels.com/photos/30666120/pexels-photo-30666120/free-photo-of-dynamic-soccer-player-dribbling-on-field-at-night.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+          backgroundImage:
+            "url(https://images.pexels.com/photos/30666120/pexels-photo-30666120/free-photo-of-dynamic-soccer-player-dribbling-on-field-at-night.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
         }}
       >
         <div className="hero-overlay bg-opacity-60 dark:bg-opacity-80"></div>
@@ -18,7 +19,7 @@ const Banner = () => {
               <TypingEffect />
             </div>
             <div>
-              {/* <Carousel /> */}
+              <Carousel />
             </div>
           </div>
         </div>

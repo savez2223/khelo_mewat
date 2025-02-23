@@ -24,10 +24,19 @@ const Navbar = ({ isHomePage }) => {
 
   const navOptions = (
     <>
-      <li><ActiveLink to="/">Home</ActiveLink></li>
-      <li><ActiveLink to="/courses">Games</ActiveLink></li>
-      <li><ActiveLink to="/aboutus">About Us</ActiveLink></li>
-      {user ? (
+      <li>
+        <ActiveLink to="/">Home</ActiveLink>
+      </li>
+      <li>
+        <ActiveLink to="/courses">Games</ActiveLink>
+      </li>
+      <li>
+        <ActiveLink to="/aboutus">About Us</ActiveLink>
+      </li>
+      <li>
+        <ActiveLink to="/contact">Contact Us</ActiveLink>
+      </li>
+      {/* {user ? (
         <>
           <li><Link to="/dashboard">Dashboard</Link></li>
           {role === "Student" && (
@@ -50,7 +59,7 @@ const Navbar = ({ isHomePage }) => {
           <li><Link to="/signin">Sign In</Link></li>
           <li><Link to="/signup">Sign Up</Link></li>
         </>
-      )}
+      )} */}
     </>
   );
 
