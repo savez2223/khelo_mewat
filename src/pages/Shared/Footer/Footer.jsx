@@ -25,7 +25,7 @@ const Footer = () => {
               <div className="bg-white rounded-full p-3">
                 <img
                   loading="lazy"
-                  className="w-20 md:w-32" // Smaller on mobile (w-20), larger on md+ (w-32)
+                  className="w-20 md:w-32"
                   src={logo}
                   alt="Logo"
                 />
@@ -85,14 +85,25 @@ const Footer = () => {
               Quick Links
             </header>
             <div className="flex flex-col space-y-3 text-base text-white">
-              <Link className="link link-hover hover:text-[#E87722]">Home</Link>
-              <Link className="link link-hover hover:text-[#E87722]">
+              <Link to="/" className="link link-hover hover:text-[#E87722]">
+                Home
+              </Link>
+              <Link
+                to="/games"
+                className="link link-hover hover:text-[#E87722]"
+              >
                 Games
               </Link>
-              <Link className="link link-hover hover:text-[#E87722]">
+              <Link
+                to="/aboutus"
+                className="link link-hover hover:text-[#E87722]"
+              >
                 About Us
               </Link>
-              <Link className="link link-hover hover:text-[#E87722]">
+              <Link
+                to="/contact"
+                className="link link-hover hover:text-[#E87722]"
+              >
                 Contact Us
               </Link>
             </div>

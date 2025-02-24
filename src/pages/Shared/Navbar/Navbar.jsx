@@ -28,7 +28,7 @@ const Navbar = ({ isHomePage }) => {
         <ActiveLink to="/">Home</ActiveLink>
       </li>
       <li>
-        <ActiveLink to="/courses">Games</ActiveLink>
+        <ActiveLink to="/games">Games</ActiveLink>
       </li>
       <li>
         <ActiveLink to="/aboutus">About Us</ActiveLink>

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import Container from "../../../components/Container/Container";
-import SectionHeader from "../../../components/SectionHeader/SectionHeader";
-import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
-import cricket from "../../../assets/banner images/cricket.jpg";
-import volleyball from "../../../assets/banner images/volleyball.jpg";
-import tugofwar from "../../../assets/banner images/Tugofwars.jpg";
-import runner from "../../../assets/banner images/runner.jpg";
-import wrestling from "../../../assets/banner images/wrestling.jpg";
+import Container from "../../components/Container/Container";
+import ScrollPageTop from "../../components/ScrollPageTop/ScrollPageTop";
+import SectionHeader from "../../components/SectionHeader/SectionHeader";
+import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
+import cricket from "../../assets/banner images/cricket.jpg";
+import volleyball from "../../assets/banner images/volleyball.jpg";
+import tugofwar from "../../assets/banner images/Tugofwars.jpg";
+import runner from "../../assets/banner images/runner.jpg";
+import wrestling from "../../assets/banner images/wrestling.jpg";
 
 const blockVillageData = {
   Nuh: [
@@ -367,8 +368,9 @@ const Courses = () => {
   };
 
   return (
-    <div className="bg-[#F5F6F5] pb-10 md:pb-20" id="tournaments">
+    <div className="bg-[#F5F6F5] pt-14 pb-10 md:pb-20" id="tournaments">
       <Container>
+        <ScrollPageTop />
         <SectionHeader
           heading={
             <span style={{ color: "#E87722" }}>Upcoming Tournaments</span>
