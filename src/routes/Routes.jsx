@@ -28,6 +28,7 @@ import MyClassDetails from "../pages/Dashboard/MyClasses/MyClassDetails";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import ClassEnrolled from "../pages/Dashboard/ManageClasses/ClassEnrolled";
 import MyCourseStudents from "../pages/Dashboard/MyClasses/MyCourseStudents";
+// import PrivacyPolicy from "../pages/PrivacyPolicy/Privacypolicy";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   path: "/privacypolicy",
+  //   element: <PrivacyPolicy />,
+  // },
   {
     path: "/signin",
     element: <SignIn />,

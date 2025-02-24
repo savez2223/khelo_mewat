@@ -106,6 +106,12 @@ const Footer = () => {
               >
                 Contact Us
               </Link>
+              {/* <Link
+                to="/privacypolicy"
+                className="link link-hover hover:text-[#E87722]"
+              >
+                Privacy Policy
+              </Link> */}
             </div>
           </nav>
         </FadeInAnimation>
