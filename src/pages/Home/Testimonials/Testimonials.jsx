@@ -43,7 +43,7 @@ const Testimonials = () => {
       />
       <Container>
         <Swiper
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          autoplay={{ delay: 2000, disableOnInteraction: false }}
           speed={800}
           grabCursor={true}
           loop={true}

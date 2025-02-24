@@ -87,13 +87,13 @@ const Footer = () => {
             <div className="flex flex-col space-y-3 text-base text-white">
               <Link className="link link-hover hover:text-[#E87722]">Home</Link>
               <Link className="link link-hover hover:text-[#E87722]">
+                Games
+              </Link>
+              <Link className="link link-hover hover:text-[#E87722]">
                 About Us
               </Link>
               <Link className="link link-hover hover:text-[#E87722]">
-                Programmes
-              </Link>
-              <Link className="link link-hover hover:text-[#E87722]">
-                Instructors
+                Contact Us
               </Link>
             </div>
           </nav>
@@ -132,7 +132,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="text-[#E87722] hover:underline"
           >
-            Zuridox
+            <b>Zuridox</b>
           </a>
         </p>
       </div>

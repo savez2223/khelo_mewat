@@ -23,6 +23,7 @@ import CourseDetails from "../pages/CoursesPage/CourseDetails";
 import { getCourse } from "../api/courses";
 import ErrorPage from "../components/Error/ErrorPage";
 import AboutUs from "../pages/AboutUs/AboutUs";
+import ContactUs from "../pages/ContactUsPage/ContactUs";
 import MyClassDetails from "../pages/Dashboard/MyClasses/MyClassDetails";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import ClassEnrolled from "../pages/Dashboard/ManageClasses/ClassEnrolled";
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "aboutus",
         element: <AboutUs />,
+      },
+      {
+        path: "contact",
+        element: <ContactUs />,
       },
     ],
   },
