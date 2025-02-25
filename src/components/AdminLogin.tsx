@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
@@ -36,24 +37,24 @@ export default function AdminLogin() {
             </h2>
           </div>
           <nav className="space-y-4">
-            <a
-              href="/teams"
+            <Link
+              to="/teams"
               className="block text-gray-700 hover:text-blue-700 hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
             >
               Team Management
-            </a>
-            <a
-              href="/admineventsnotices"
+            </Link>
+            <Link
+              to="/admineventsnotices"
               className="block text-gray-700 hover:text-blue-700 hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
             >
               Events & Notices
-            </a>
-            <a
-              href="/admincontact"
+            </Link>
+            <Link
+              to="/admincontact"
               className="block text-gray-700 hover:text-blue-700 hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
             >
               Contact Management
-            </a>
+            </Link>
           </nav>
           <button
             onClick={handleLogout}
