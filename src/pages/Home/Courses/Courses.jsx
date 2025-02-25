@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // Import useState once here
 import Container from "../../../components/Container/Container";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
 import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
@@ -7,6 +7,8 @@ import volleyball from "../../../assets/banner images/volleyball.jpg";
 import tugofwar from "../../../assets/banner images/Tugofwars.jpg";
 import runner from "../../../assets/banner images/runner.jpg";
 import wrestling from "../../../assets/banner images/wrestling.jpg";
+import { db } from "../../../firebase/firebaseConfig"; // Adjust path if needed
+import { ref, push } from "firebase/database";
 
 const blockVillageData = {
   Nuh: [
@@ -370,26 +372,18 @@ const Courses = () => {
     <div className="bg-[#F5F6F5] pb-10 md:pb-20" id="tournaments">
       <Container>
         <SectionHeader
-          heading={
-            <span style={{ color: "#E87722" }}>Upcoming Tournaments</span>
-          }
+          heading={<span style={{ color: "#E87722" }}>Upcoming Tournaments</span>}
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {tournaments.map((tournament, index) => (
             <FadeInAnimation custom={index} key={tournament.id}>
-              <TournamentCard
-                tournament={tournament}
-                onEnrollClick={handleEnrollClick}
-              />
+              <TournamentCard tournament={tournament} onEnrollClick={handleEnrollClick} />
             </FadeInAnimation>
           ))}
         </div>
 
         {isModalOpen && (
-          <EnrollmentModal
-            tournament={selectedTournament}
-            onClose={() => setIsModalOpen(false)}
-          />
+          <EnrollmentModal tournament={selectedTournament} onClose={() => setIsModalOpen(false)} />
         )}
       </Container>
     </div>
@@ -421,6 +415,7 @@ const TournamentCard = ({ tournament, onEnrollClick }) => {
 };
 
 const EnrollmentModal = ({ tournament, onClose }) => {
+  // No need to import useState again; it's already imported at the top
   const [formData, setFormData] = useState({
     playerName: "",
     fatherName: "",
@@ -432,9 +427,75 @@ const EnrollmentModal = ({ tournament, onClose }) => {
     aadhar: "",
     mobile: "",
   });
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (
+      !formData.playerName ||
+      !formData.fatherName ||
+      !formData.gender ||
+      !formData.dob ||
+      !formData.schoolOrVillage ||
+      !formData.block ||
+      !formData.village ||
+      !formData.aadhar ||
+      !formData.mobile
+    ) {
+      setError("Please fill in all required fields");
+      return;
+    }
+
+    if (!/^\d{12}$/.test(formData.aadhar)) {
+      setError("Aadhar number must be 12 digits");
+      return;
+    }
+
+    if (!/^\d{10}$/.test(formData.mobile)) {
+      setError("Mobile number must be 10 digits");
+      return;
+    }
+
+    try {
+      const registrationData = {
+        ...formData,
+        tournamentId: tournament.id,
+        tournamentName: tournament.name,
+        timestamp: new Date().toISOString(),
+      };
+
+      const registrationsRef = ref(db, "tournamentRegistrations");
+      await push(registrationsRef, registrationData);
+
+      setSuccess(true);
+      setError(null);
+
+      setFormData({
+        playerName: "",
+        fatherName: "",
+        gender: "",
+        dob: "",
+        schoolOrVillage: "",
+        block: "",
+        village: "",
+        aadhar: "",
+        mobile: "",
+      });
+
+      setTimeout(() => {
+        setSuccess(false);
+        onClose();
+      }, 2000);
+    } catch (error) {
+      setError("Failed to register. Please try again.");
+      console.error("Error submitting registration:", error);
+    }
   };
 
   return (
@@ -452,10 +513,8 @@ const EnrollmentModal = ({ tournament, onClose }) => {
           </button>
         </div>
 
-        <form className="space-y-4">
-          <label className="block text-gray-700 font-medium">
-            Name of Player
-          </label>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <label className="block text-gray-700 font-medium">Name of Player</label>
           <input
             type="text"
             name="playerName"
@@ -466,9 +525,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             required
           />
 
-          <label className="block text-gray-700 font-medium">
-            Father's Name
-          </label>
+          <label className="block text-gray-700 font-medium">Father's Name</label>
           <input
             type="text"
             name="fatherName"
@@ -487,26 +544,23 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black"
             required
           >
+            <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
 
-          <label className="block text-gray-700 font-medium">
-            Date of Birth
-          </label>
+          <label className="block text-gray-700 font-medium">Date of Birth</label>
           <input
             type="date"
             name="dob"
-            placeholder="Date of Birth"
             value={formData.dob}
             onChange={handleChange}
             className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black"
             required
           />
-          <label className="block text-gray-700 font-medium">
-            Name of School/College
-          </label>
+
+          <label className="block text-gray-700 font-medium">Name of School/College</label>
           <input
             type="text"
             name="schoolOrVillage"
@@ -550,9 +604,8 @@ const EnrollmentModal = ({ tournament, onClose }) => {
                 </option>
               ))}
           </select>
-          <label className="block text-gray-700 font-medium">
-            Aadhar Number
-          </label>
+
+          <label className="block text-gray-700 font-medium">Aadhar Number</label>
           <div className="flex items-center bg-gray-300 border rounded-lg px-4">
             <input
               type="text"
@@ -561,15 +614,12 @@ const EnrollmentModal = ({ tournament, onClose }) => {
               value={formData.aadhar}
               onChange={handleChange}
               maxLength="12"
-              pattern="\d{12}"
               className="w-full bg-transparent px-2 py-2 text-black focus:outline-none placeholder:text-black"
               required
             />
           </div>
 
-          <label className="block text-gray-700 font-medium">
-            Mobile Number
-          </label>
+          <label className="block text-gray-700 font-medium">Mobile Number</label>
           <div className="flex items-center bg-gray-300 border rounded-lg px-4">
             <input
               type="text"
@@ -578,11 +628,17 @@ const EnrollmentModal = ({ tournament, onClose }) => {
               value={formData.mobile}
               onChange={handleChange}
               maxLength="10"
-              pattern="\d{10}"
               className="w-full bg-transparent px-2 py-2 text-black focus:outline-none placeholder:text-black"
               required
             />
           </div>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {success && (
+            <p className="text-green-500 text-sm">
+              Registration successful! Closing in 2 seconds...
+            </p>
+          )}
 
           <div className="flex justify-end gap-4 mt-6">
             <button
@@ -594,7 +650,8 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-[#E87722] hover:bg-[#39A935] text-white font-medium rounded-lg"
+              className="px-6 py-2 bg-[#E87722] hover:bg-[#39A935] text-white font-medium rounded-lg disabled:bg-gray-400"
+              disabled={success}
             >
               Submit
             </button>

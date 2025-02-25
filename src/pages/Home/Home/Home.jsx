@@ -10,6 +10,7 @@ import ScrollPageTop from "../../../components/ScrollPageTop/ScrollPageTop";
 import Courses from "../Courses/Courses";
 import About from "../About/About";
 import { Helmet } from "react-helmet-async";
+import EventsNotices from "../../../components/EventsNotices";
 
 const Home = () => {
   return (
@@ -19,13 +20,13 @@ const Home = () => {
       </Helmet>
       <ScrollPageTop />
       <Banner />
+      <EventsNotices />
       <Courses />
-      {/* <Facilities /> */}
-      {/* <InstructorsList /> */}
+
       <About />
       <Testimonials />
       <Contact />
-      {/* <Partners /> */}
+
       <ScrollUp />
     </div>
   );

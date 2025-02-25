@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Container from "../../../components/Container/Container";
+import { ref, push } from "firebase/database"; // Import Realtime Database functions
+import { db } from "../../../firebase/firebaseConfig"; // Import Firebase config
 import { FaPhoneAlt, FaClock } from "react-icons/fa";
 import { IoMdPin } from "react-icons/io";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
@@ -11,6 +13,7 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
@@ -21,8 +24,8 @@ const Contact = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // Telegram Bot Integration
-  const sendToTelegram = async (e) => {
+  // Function to send data to Firebase Realtime Database
+  const sendToFirebase = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -30,40 +33,15 @@ const Contact = () => {
 
     const { name, email, message } = formData;
 
-    // Telegram bot credentials (replace with your own)
-    const botToken = "YOUR_TELEGRAM_BOT_TOKEN"; // e.g., "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
-    const chatId = "YOUR_CHAT_ID"; // e.g., "-1001234567890" or your personal chat ID
-
-    const telegramMessage = `
-      New Contact Form Submission:
-      Name: ${name}
-      Email: ${email}
-      Message: ${message}
-    `;
-
     try {
-      const response = await fetch(
-        `https://api.telegram.org/bot${botToken}/sendMessage`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: telegramMessage,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to send message to Telegram");
-      }
+      const contactRef = ref(db, "contacts"); // Reference to "contacts" in the database
+      await push(contactRef, { name, email, message, timestamp: new Date().toISOString() });
 
       setSubmitted(true);
       setFormData({ name: "", email: "", message: "" }); // Reset form
     } catch (err) {
-      setError(err.message);
+      setError("Failed to send message. Please try again.");
+      console.error("Firebase Error:", err);
     } finally {
       setLoading(false);
     }
@@ -71,12 +49,11 @@ const Contact = () => {
 
   return (
     <div className="bg-[#F5F6F5] pb-16 lg:pb-8 pt-0" id="contact">
-      <SectionHeader
-        heading={<span style={{ color: "#39A935" }}>Contact Us</span>}
-      />
+      <SectionHeader heading={<span style={{ color: "#39A935" }}>Contact Us</span>} />
       <Container>
         <FadeInAnimation>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-6 md:p-10 shadow-lg bg-white rounded-xl border border-gray-200">
+            
             {/* Contact Info Section */}
             <div className="space-y-6">
               <div className="flex items-start gap-4 p-4 rounded-lg border-l-4 border-[#39A935] shadow-md bg-gray-50">
@@ -100,29 +77,17 @@ const Contact = () => {
               <div className="flex items-start gap-4 p-4 rounded-lg border-l-4 border-[#39A935] shadow-md bg-gray-50">
                 <FaClock className="text-3xl text-[#39A935]" />
                 <div>
-                  <p className="text-lg font-semibold text-gray-800">
-                    Working Hours
-                  </p>
-                  <p className="text-gray-600">
-                    Sat - Thu: 09:00 AM - 10:00 PM
-                  </p>
+                  <p className="text-lg font-semibold text-gray-800">Working Hours</p>
+                  <p className="text-gray-600">Sat - Thu: 09:00 AM - 10:00 PM</p>
                   <p className="text-gray-600">Friday: 10:00 AM - 08:00 PM</p>
                 </div>
               </div>
             </div>
 
             {/* Contact Form Section */}
-            <form
-              onSubmit={sendToTelegram}
-              className="space-y-5 bg-gray-50 p-6 rounded-xl shadow-md border border-gray-200"
-            >
+            <form onSubmit={sendToFirebase} className="space-y-5 bg-gray-50 p-6 rounded-xl shadow-md border border-gray-200">
               <div>
-                <label
-                  className="block text-gray-800 font-semibold mb-1"
-                  htmlFor="name"
-                >
-                  Your Name
-                </label>
+                <label className="block text-gray-800 font-semibold mb-1" htmlFor="name">Your Name</label>
                 <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#39A935] focus:outline-none bg-white text-gray-700 placeholder-gray-400"
                   type="text"
@@ -135,12 +100,7 @@ const Contact = () => {
               </div>
 
               <div>
-                <label
-                  className="block text-gray-800 font-semibold mb-1"
-                  htmlFor="email"
-                >
-                  Email Address
-                </label>
+                <label className="block text-gray-800 font-semibold mb-1" htmlFor="email">Email Address</label>
                 <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E87722] focus:outline-none bg-white text-gray-700 placeholder-gray-400"
                   type="email"
@@ -153,12 +113,7 @@ const Contact = () => {
               </div>
 
               <div>
-                <label
-                  className="block text-gray-800 font-semibold mb-1"
-                  htmlFor="message"
-                >
-                  Message
-                </label>
+                <label className="block text-gray-800 font-semibold mb-1" htmlFor="message">Message</label>
                 <textarea
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#39A935] focus:outline-none bg-white text-gray-700 placeholder-gray-400"
                   rows="4"
@@ -170,22 +125,14 @@ const Contact = () => {
                 ></textarea>
               </div>
 
-              {submitted && (
-                <p className="text-[#39A935] text-center">
-                  Message sent successfully!
-                </p>
-              )}
-              {error && (
-                <p className="text-red-500 text-center">Error: {error}</p>
-              )}
+              {submitted && <p className="text-[#39A935] text-center">Message sent successfully!</p>}
+              {error && <p className="text-red-500 text-center">{error}</p>}
 
               <button
                 type="submit"
                 disabled={loading}
                 className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
-                  loading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-[#39A935] hover:bg-[#2d8a2d]"
+                  loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#39A935] hover:bg-[#2d8a2d]"
                 }`}
               >
                 {loading ? "Sending..." : "Send Message"}

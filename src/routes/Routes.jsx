@@ -28,6 +28,11 @@ import MyClassDetails from "../pages/Dashboard/MyClasses/MyClassDetails";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import ClassEnrolled from "../pages/Dashboard/ManageClasses/ClassEnrolled";
 import MyCourseStudents from "../pages/Dashboard/MyClasses/MyCourseStudents";
+import AdminContact from "../components/AdminContact";
+import AppliedTeams from "../components/AppliedTeams";
+import AdminEventsNotices from "../components/AdminEventsNotices";
+import AdminLogin from "../components/AdminLogin";
+
 // import PrivacyPolicy from "../pages/PrivacyPolicy/Privacypolicy";
 
 const router = createBrowserRouter([
@@ -44,6 +49,26 @@ const router = createBrowserRouter([
         path: "games",
         element: <CoursesPage />,
       },
+      {
+        path: "admincontact",
+        element: <AdminContact />,
+      },
+
+      {
+        path: "admineventsnotices",
+        element: <AdminEventsNotices />,
+      },
+
+      {
+        path: "teams",
+        element: <AppliedTeams />,
+      },
+
+      {
+        path: "adminlogin",
+        element: <AdminLogin />,
+        },
+
       {
         path: "course/details/:id",
         element: <CourseDetails />,
