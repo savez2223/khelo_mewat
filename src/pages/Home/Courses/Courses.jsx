@@ -372,18 +372,26 @@ const Courses = () => {
     <div className="bg-[#F5F6F5] pb-10 md:pb-20" id="tournaments">
       <Container>
         <SectionHeader
-          heading={<span style={{ color: "#E87722" }}>Upcoming Tournaments</span>}
+          heading={
+            <span style={{ color: "#E87722" }}>Upcoming Tournaments</span>
+          }
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {tournaments.map((tournament, index) => (
             <FadeInAnimation custom={index} key={tournament.id}>
-              <TournamentCard tournament={tournament} onEnrollClick={handleEnrollClick} />
+              <TournamentCard
+                tournament={tournament}
+                onEnrollClick={handleEnrollClick}
+              />
             </FadeInAnimation>
           ))}
         </div>
 
         {isModalOpen && (
-          <EnrollmentModal tournament={selectedTournament} onClose={() => setIsModalOpen(false)} />
+          <EnrollmentModal
+            tournament={selectedTournament}
+            onClose={() => setIsModalOpen(false)}
+          />
         )}
       </Container>
     </div>
@@ -421,7 +429,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
     fatherName: "",
     gender: "",
     dob: "",
-    schoolOrVillage: "",
+    ward: "",
     block: "",
     village: "",
     aadhar: "",
@@ -442,7 +450,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
       !formData.fatherName ||
       !formData.gender ||
       !formData.dob ||
-      !formData.schoolOrVillage ||
+      !formData.ward ||
       !formData.block ||
       !formData.village ||
       !formData.aadhar ||
@@ -481,7 +489,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
         fatherName: "",
         gender: "",
         dob: "",
-        schoolOrVillage: "",
+        ward: "",
         block: "",
         village: "",
         aadhar: "",
@@ -514,7 +522,9 @@ const EnrollmentModal = ({ tournament, onClose }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block text-gray-700 font-medium">Name of Player</label>
+          <label className="block text-gray-700 font-medium">
+            Name of Player
+          </label>
           <input
             type="text"
             name="playerName"
@@ -525,7 +535,9 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             required
           />
 
-          <label className="block text-gray-700 font-medium">Father's Name</label>
+          <label className="block text-gray-700 font-medium">
+            Father's Name
+          </label>
           <input
             type="text"
             name="fatherName"
@@ -550,7 +562,9 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             <option value="Other">Other</option>
           </select>
 
-          <label className="block text-gray-700 font-medium">Date of Birth</label>
+          <label className="block text-gray-700 font-medium">
+            Date of Birth
+          </label>
           <input
             type="date"
             name="dob"
@@ -560,11 +574,11 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             required
           />
 
-          <label className="block text-gray-700 font-medium">Name of School/College</label>
+          <label className="block text-gray-700 font-medium">Ward No</label>
           <input
             type="text"
             name="schoolOrVillage"
-            placeholder="School/College Name"
+            placeholder="Ward No"
             value={formData.schoolOrVillage}
             onChange={handleChange}
             className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black placeholder:text-black"
@@ -605,7 +619,9 @@ const EnrollmentModal = ({ tournament, onClose }) => {
               ))}
           </select>
 
-          <label className="block text-gray-700 font-medium">Aadhar Number</label>
+          <label className="block text-gray-700 font-medium">
+            Aadhar Number
+          </label>
           <div className="flex items-center bg-gray-300 border rounded-lg px-4">
             <input
               type="text"
@@ -619,7 +635,9 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             />
           </div>
 
-          <label className="block text-gray-700 font-medium">Mobile Number</label>
+          <label className="block text-gray-700 font-medium">
+            Mobile Number
+          </label>
           <div className="flex items-center bg-gray-300 border rounded-lg px-4">
             <input
               type="text"

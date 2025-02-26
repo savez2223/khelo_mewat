@@ -39,26 +39,26 @@ export default function AdminLogin() {
           <nav className="space-y-4">
             <Link
               to="/teams"
-              className="block text-gray-700 hover:text-blue-700 hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
+              className="block text-gray-700 hover:text-[#39A935] hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
             >
               Team Management
             </Link>
             <Link
               to="/admineventsnotices"
-              className="block text-gray-700 hover:text-blue-700 hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
+              className="block text-gray-700 hover:text-[#39A935] hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
             >
               Events & Notices
             </Link>
             <Link
               to="/admincontact"
-              className="block text-gray-700 hover:text-blue-700 hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
+              className="block text-gray-700 hover:text-[#39A935] hover:bg-blue-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
             >
               Contact Management
             </Link>
           </nav>
           <button
             onClick={handleLogout}
-            className="mt-8 bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-6 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+            className="mt-8 bg-[#E87722] hover:bg-[#39A935] text-white font-medium py-2.5 px-6 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
           >
             Sign Out
           </button>
@@ -86,7 +86,7 @@ export default function AdminLogin() {
               placeholder="Enter username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white text-black"
             />
           </div>
           <div>
@@ -98,12 +98,12 @@ export default function AdminLogin() {
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white text-black"
             />
           </div>
           <button
             onClick={handleLogin}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+            className="w-full bg-[#E87722] hover:bg-[#39A935] text-white font-medium py-3 px-6 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
           >
             Sign In
           </button>

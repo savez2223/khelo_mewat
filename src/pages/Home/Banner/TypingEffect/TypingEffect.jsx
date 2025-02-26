@@ -24,7 +24,7 @@ const TypingEffect = () => {
         className="md:text-3xl text-2xl font-semibold bg-[#E87722] md:w-4/6 w-11/12 rounded-lg mx-auto py-3 px-4 mt-6 mb-8"
         style={{ boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)" }}
       >
-        State Programme for Development of Sports
+        District Programme for Development of Sports
       </h4>
       <div className="md:text-3xl text-2xl font-semibold text-[#E87722]">
         <span>{texts}</span>

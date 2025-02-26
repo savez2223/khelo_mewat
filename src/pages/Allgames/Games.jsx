@@ -428,7 +428,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
     fatherName: "",
     gender: "",
     dob: "",
-    schoolOrVillage: "",
+    Ward: "",
     block: "",
     village: "",
     aadhar: "",
@@ -506,14 +506,12 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black"
             required
           />
-          <label className="block text-gray-700 font-medium">
-            Name of School/College
-          </label>
+          <label className="block text-gray-700 font-medium">Ward No.</label>
           <input
             type="text"
             name="schoolOrVillage"
-            placeholder="School/College Name"
-            value={formData.schoolOrVillage}
+            placeholder="Ward No"
+            value={formData.Ward}
             onChange={handleChange}
             className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black placeholder:text-black"
             required
