@@ -62,19 +62,20 @@ const Footer = () => {
             <div className="flex flex-col space-y-3 text-base text-white">
               <p className="flex items-center gap-1">
                 <FaMapMarkerAlt className="text-[#E87722]" />
-                Nuh, Mewat, Haryana 122107
+                District sports office Near Radio Mewat Nuh Mewat, Haryana
+                122107
               </p>
               <p className="flex items-center gap-1">
                 <FaPhoneAlt className="text-[#E87722]" />
-                +91 9389678954
+                +91 9992445551
               </p>
-              <p className="flex items-center gap-1">
+              {/* <p className="flex items-center gap-1">
                 <FaHeadset className="text-[#E87722]" />
                 +91 7050068050
-              </p>
+              </p> */}
               <p className="flex items-center gap-1">
                 <FaEnvelope className="text-[#E87722]" />
-                Mewatsports@inqury.com
+                dsomwt@gmail.com
               </p>
             </div>
           </nav>

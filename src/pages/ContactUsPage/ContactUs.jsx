@@ -42,15 +42,16 @@ const ContactUs = () => {
               <div className="mt-6 space-y-3 text-gray-700 text-lg">
                 <p>
                   <strong className="text-[#E87722]">Address:</strong> District
-                  Sports Office, Nuh, Haryana, India
+                  District sports office Near Radio Mewat Nuh Mewat, Haryana
+                  122107
                 </p>
                 <p>
-                  <strong className="text-[#E87722]">Phone:</strong> +91 98765
-                  43210
+                  <strong className="text-[#E87722]">Phone:</strong> +91
+                  9992445551
                 </p>
                 <p>
                   <strong className="text-[#E87722]">Email:</strong>{" "}
-                  contact@khelomewat.com
+                  dsomwt@gmail.com
                 </p>
                 <p>
                   <strong className="text-[#E87722]">Office Hours:</strong>{" "}

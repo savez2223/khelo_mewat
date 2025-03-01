@@ -96,7 +96,7 @@ const EventsNotices = () => {
   }
 
   return (
-    <div className="bg-[#F5F6F5] min-h-screen py-12 md:py-16">
+    <div className="bg-[#F5F6F5]">
       <Container>
         <div className="text-center mb-12">
           <SectionHeader

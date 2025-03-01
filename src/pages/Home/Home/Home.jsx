@@ -11,6 +11,7 @@ import Courses from "../Courses/Courses";
 import About from "../About/About";
 import { Helmet } from "react-helmet-async";
 import EventsNotices from "../../../components/EventsNotices";
+import DownloadForms from "../../../components/DownloadForm";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       <ScrollPageTop />
       <Banner />
       <EventsNotices />
+      <DownloadForms />
       <Courses />
 
       <About />

@@ -143,14 +143,11 @@ const PrivacyPolicy = () => {
               Nuh, Mewat, Haryana 122107
               <br />
               Email:{" "}
-              <a
-                href="mailto:khelomewat@inquiry.com"
-                className="text-[#E87722]"
-              >
-                khelomewat@inquiry.com
+              <a href="mailto:dsomwt@gmail.com" className="text-[#E87722]">
+                dsomwt@gmail.com
               </a>
               <br />
-              Phone: +91 9389678954 / +91 7050068050
+              Phone: +91 9992445551
             </p>
           </div>
         </FadeInAnimation>
