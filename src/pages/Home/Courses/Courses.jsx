@@ -2,11 +2,11 @@ import React, { useState } from "react"; // Import useState once here
 import Container from "../../../components/Container/Container";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
 import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
-import cricket from "../../../assets/banner images/cricket.jpg";
-import volleyball from "../../../assets/banner images/volleyball.jpg";
-import tugofwar from "../../../assets/banner images/Tugofwars.jpg";
-import runner from "../../../assets/banner images/runner.jpg";
-import wrestling from "../../../assets/banner images/wrestling.jpg";
+import cricket from "../../../assets/banner images/cricket1.jpg";
+import volleyball from "../../../assets/banner images/volleyball1.jpg";
+import tugofwar from "../../../assets/banner images/Tugofwars1.jpg";
+import runner from "../../../assets/banner images/runner1.jpg";
+import wrestling from "../../../assets/banner images/wrestling1.jpg";
 import { db } from "../../../firebase/firebaseConfig"; // Adjust path if needed
 import { ref, push } from "firebase/database";
 

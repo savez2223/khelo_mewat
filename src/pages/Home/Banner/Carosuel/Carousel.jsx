@@ -2,11 +2,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Navigation } from "swiper/modules";
 import "swiper/css";
 import "./Carousel.css";
-import cricket from "../../../../assets/banner images/cricket.jpg";
-import vollyball from "../../../../assets/banner images/volleyball.jpg";
-import Tugofwars from "../../../../assets/banner images/Tugofwars.jpg";
-import runner from "../../../../assets/banner images/runner.jpg";
-import Wrestling from "../../../../assets/banner images/wrestling.jpg";
+import cricket from "../../../../assets/banner images/cricket1.jpg";
+import vollyball from "../../../../assets/banner images/volleyball1.jpg";
+import Tugofwars from "../../../../assets/banner images/Tugofwars1.jpg";
+import runner from "../../../../assets/banner images/runner1.jpg";
+import Wrestling from "../../../../assets/banner images/wrestling1.jpg";
 
 const Carousel = () => {
   return (
