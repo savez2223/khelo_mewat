@@ -37,6 +37,12 @@ const TypingEffect = () => {
         local youth, particularly in rural areas, across the Nuh district of
         Haryana.
       </p>
+      <a
+        href="/games"
+        className="bg-[#E87722] text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-[#39A935] transition duration-300"
+      >
+        Participate Now
+      </a>
     </div>
   );
 };
