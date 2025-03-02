@@ -1,50 +1,50 @@
 [
   {
-    "name": "John Doe",
+    "name": "Rajender Hooda",
     "image": "https://i.ibb.co/h8zN7hc/pngtree-businessman-avatar-icon-flat-style-png-image-1917273.jpg",
-    "testimony": "I had an amazing experience at the Khelo Mewat. The coaches are incredibly talented and dedicated to helping athletes reach their full potential. I highly recommend this academy to anyone looking to excel in sports.",
-    "designation": "Athlete"
+    "testimony": "Khelo Mewat organized one of the best tournaments I’ve ever participated in! The matches were well-managed, and everything was fair. Looking forward to playing again next year.",
+    "designation": "Football Player"
   },
   {
-    "name": "Jane Smith",
+    "name": "Saira Khan",
     "image": "https://i.ibb.co/9s52wRL/avatar6.png",
-    "testimony": "Khelo Mewat has top-notch facilities and a supportive environment for athletes. The coaching staff is knowledgeable and passionate. I'm grateful for the training and opportunities I received here.",
-    "designation": "Swimmer"
+    "testimony": "The energy and excitement at Khelo Mewat tournaments are unmatched! From smooth registrations to well-maintained grounds, it was a fantastic experience.",
+    "designation": "Cricket Team Captain"
   },
   {
-    "name": "Michael Johnson",
+    "name": "Jitender Ahlawat",
     "image": "https://i.ibb.co/h8zN7hc/pngtree-businessman-avatar-icon-flat-style-png-image-1917273.jpg",
-    "testimony": "I've been a part of Khelo Mewat for years, and it's been a life-changing experience. The academy's focus on holistic development has helped me grow not only as an athlete but as a person.",
-    "designation": "Track and Field Athlete"
+    "testimony": "Khelo Mewat brings the true spirit of sportsmanship! The level of competition was high, and everything was conducted professionally. Hats off to the organizers!",
+    "designation": "Kabaddi Player"
   },
   {
-    "name": "Emily Davis",
+    "name": "Pooja Malik",
     "image": "https://i.ibb.co/9s52wRL/avatar6.png",
-    "testimony": "Khelo Mewat provides excellent training programs and has a supportive community. It's the perfect place for aspiring athletes to pursue their dreams and achieve excellence.",
-    "designation": "Gymnast"
+    "testimony": "As a female athlete, I was thrilled to see such great arrangements for women’s matches too. The crowd support and enthusiasm were incredible!",
+    "designation": "Volleyball Player"
   },
   {
-    "name": "David Wilson",
+    "name": "Mohammad Ayaan",
     "image": "https://i.ibb.co/h8zN7hc/pngtree-businessman-avatar-icon-flat-style-png-image-1917273.jpg",
-    "testimony": "The coaching staff at Khelo Mewat is exceptional. They provide personalized training that has significantly improved my performance. I can't thank them enough for their dedication.",
+    "testimony": "From scheduling to fair umpiring, Khelo Mewat tournaments are truly world-class. It’s great to see such professional events happening in Mewat.",
+    "designation": "Hockey Player"
+  },
+  {
+    "name": "Seema Rathi",
+    "image": "https://i.ibb.co/9s52wRL/avatar6.png",
+    "testimony": "The tournament was well-organized with clear rules and fair judgment. It was amazing to play against strong teams and showcase our talent.",
     "designation": "Basketball Player"
   },
   {
-    "name": "Olivia Adams",
-    "image": "https://i.ibb.co/9s52wRL/avatar6.png",
-    "testimony": "I'm proud to be associated with the Khelo Mewat. The academy's focus on sportsmanship and teamwork has taught me valuable life lessons in addition to sports skills.",
-    "designation": "Soccer Player"
-  },
-  {
-    "name": "Daniel White",
+    "name": "Sajid Malik",
     "image": "https://i.ibb.co/h8zN7hc/pngtree-businessman-avatar-icon-flat-style-png-image-1917273.jpg",
-    "testimony": "Khelo Mewat offers world-class facilities and coaching. It's a place where athletes can thrive and achieve their goals. I'm grateful for my time here.",
-    "designation": "Tennis Player"
+    "testimony": "The atmosphere at Khelo Mewat was electrifying! Everything from the matches to the closing ceremony was superbly handled.",
+    "designation": "Badminton Player"
   },
   {
-    "name": "Sophia Turner",
+    "name": "Aqib Meo",
     "image": "https://i.ibb.co/9s52wRL/avatar6.png",
-    "testimony": "I've had a fantastic experience at the Khelo Mewat. The academy's support and encouragement have been instrumental in my growth as a young athlete.",
+    "testimony": "Participating in Khelo Mewat was a dream come true! The competition was tough, but the experience was unforgettable. Can’t wait for the next edition!",
     "designation": "Young Athlete"
   }
 ]
