@@ -4,6 +4,7 @@ import Container from "../../components/Container/Container";
 import ScrollPageTop from "../../components/ScrollPageTop/ScrollPageTop";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
+<<<<<<< HEAD
 import cricket from "../../assets/banner images/cricket.jpg";
 import volleyball from "../../assets/banner images/volleyball.jpg";
 import tugofwar from "../../assets/banner images/Tugofwars.jpg";
@@ -12,6 +13,13 @@ import wrestling from "../../assets/banner images/wrestling.jpg";
 import { db } from "../../firebase/firebaseConfig";
 import { ref, push } from "firebase/database";
 import axios from "axios"; 
+=======
+import cricket from "../../assets/banner images/cricket1.jpg";
+import volleyball from "../../assets/banner images/volleyball1.jpg";
+import tugofwar from "../../assets/banner images/Tugofwars1.jpg";
+import runner from "../../assets/banner images/runner1.jpg";
+import wrestling from "../../assets/banner images/wrestling1.jpg";
+>>>>>>> 99dc70dedcbef2c64d7de5f0ec98604be8229bab
 
 const blockVillageData = {
   Nuh: [

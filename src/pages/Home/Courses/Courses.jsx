@@ -3,12 +3,21 @@ import { useNavigate } from "react-router-dom"; // For redirection
 import Container from "../../../components/Container/Container";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
 import FadeInAnimation from "../../../components/FadeInAnimation/FadeInAnimation";
+<<<<<<< HEAD
 import cricket from "../../../assets/banner images/cricket.jpg";
 import volleyball from "../../../assets/banner images/volleyball.jpg";
 import tugofwar from "../../../assets/banner images/Tugofwars.jpg";
 import runner from "../../../assets/banner images/runner.jpg";
 import wrestling from "../../../assets/banner images/wrestling.jpg";
 import { db } from "../../../firebase/firebaseConfig";
+=======
+import cricket from "../../../assets/banner images/cricket1.jpg";
+import volleyball from "../../../assets/banner images/volleyball1.jpg";
+import tugofwar from "../../../assets/banner images/Tugofwars1.jpg";
+import runner from "../../../assets/banner images/runner1.jpg";
+import wrestling from "../../../assets/banner images/wrestling1.jpg";
+import { db } from "../../../firebase/firebaseConfig"; // Adjust path if needed
+>>>>>>> 99dc70dedcbef2c64d7de5f0ec98604be8229bab
 import { ref, push } from "firebase/database";
 import axios from "axios"; 
 
