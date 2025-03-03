@@ -1,4 +1,5 @@
 import { useTypewriter, Cursor } from "react-simple-typewriter";
+import { Link } from "react-router-dom";
 
 const TypingEffect = () => {
   const [texts] = useTypewriter({
@@ -37,12 +38,11 @@ const TypingEffect = () => {
         local youth, particularly in rural areas, across the Nuh district of
         Haryana.
       </p>
-      <a
-        href="/games"
-        className="bg-[#E87722] text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-[#39A935] transition duration-300"
-      >
-        Participate Now
-      </a>
+      <Link to="/games">
+        <a className="bg-[#E87722] text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-[#39A935] transition duration-300">
+          Participate Now
+        </a>
+      </Link>
     </div>
   );
 };
