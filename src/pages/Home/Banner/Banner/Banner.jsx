@@ -8,7 +8,7 @@ const Banner = () => {
       <div
         className="hero min-h-screen !px-0"
         style={{
-          backgroundImage: "url('/banerbg3.jpg')", // Correct way for public folder image
+          backgroundImage: "url('/banerbg4.jpg')", // Correct way for public folder image
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

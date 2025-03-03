@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "../components/Container/Container";
 import SectionHeader from "../components/SectionHeader/SectionHeader";
-import sarpanchPerforma from "../assets/Sarpanch-performa.pdf";
+import sarpanchPerforma from "../assets/Sarpanch Performa2.pdf";
 import entryForm from "../assets/Entry Form Khelo Mewat Mahakumbh.pdf";
 
 const DownloadForms = () => {

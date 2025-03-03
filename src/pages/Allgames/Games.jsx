@@ -428,6 +428,7 @@ const TournamentCard = ({ tournament, onEnrollClick }) => {
 
 const EnrollmentModal = ({ tournament, onClose }) => {
   const [formData, setFormData] = useState({
+    TeamName: "",
     playerName: "",
     fatherName: "",
     gender: "",
@@ -475,6 +476,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
     console.log("Form submitted with data:", formData);
 
     if (
+      !formData.TeamName ||
       !formData.playerName ||
       !formData.fatherName ||
       !formData.gender ||
@@ -510,6 +512,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
 
       // Prepare data for Firebase
       const registrationData = {
+        TeamName: formData.TeamName,
         playerName: formData.playerName,
         fatherName: formData.fatherName,
         gender: formData.gender,
@@ -533,6 +536,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
       setError(null);
 
       setFormData({
+        TeamName: "",
         playerName: "",
         fatherName: "",
         gender: "",
@@ -580,13 +584,24 @@ const EnrollmentModal = ({ tournament, onClose }) => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <label className="block text-gray-700 font-medium">
-              Name of Player
+              Name Of Player
             </label>
             <input
               type="text"
               name="playerName"
-              placeholder="Name of Player"
+              placeholder="Name Of Player"
               value={formData.playerName}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black placeholder:text-black"
+              required
+            />
+
+            <label className="block text-gray-700 font-medium">Team Name</label>
+            <input
+              type="text"
+              name="TeamName"
+              placeholder="Team Name"
+              value={formData.TeamName}
               onChange={handleChange}
               className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black placeholder:text-black"
               required
@@ -631,17 +646,6 @@ const EnrollmentModal = ({ tournament, onClose }) => {
               required
             />
 
-            <label className="block text-gray-700 font-medium">Ward No</label>
-            <input
-              type="text"
-              name="ward"
-              placeholder="Ward No"
-              value={formData.ward}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black placeholder:text-black"
-              required
-            />
-
             <label className="block text-gray-700 font-medium">Block</label>
             <select
               name="block"
@@ -676,6 +680,17 @@ const EnrollmentModal = ({ tournament, onClose }) => {
                 ))}
             </select>
 
+            <label className="block text-gray-700 font-medium">Ward No</label>
+            <input
+              type="text"
+              name="ward"
+              placeholder="Ward No"
+              value={formData.ward}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-300 border rounded-lg text-black placeholder:text-black"
+              required
+            />
+
             <label className="block text-gray-700 font-medium">
               Aadhar Number
             </label>
@@ -693,7 +708,7 @@ const EnrollmentModal = ({ tournament, onClose }) => {
             </div>
 
             <label className="block text-gray-700 font-medium">
-              Mobile Number
+              Captain Mobile Number
             </label>
             <div className="flex items-center bg-gray-300 border rounded-lg px-4">
               <input
