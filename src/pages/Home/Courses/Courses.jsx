@@ -14,20 +14,20 @@ const Courses = () => {
   const navigate = useNavigate();
 
   const tournaments = [
-    { id: 1, name: "Cricket", image: cricket, path: "cricket" },
+    { id: 1, name: "Cricket", image: cricket, path: "games/cricket" },
     {
       id: 2,
       name: "Volleyball",
       image: volleyball,
-      path: "volleyball",
+      path: "games/volleyball",
     },
-    { id: 3, name: "Tug of War", image: tugofwar, path: "tugofwars" },
-    { id: 4, name: "Wrestling", image: wrestling, path: "wrestling" },
+    { id: 3, name: "Tug of War", image: tugofwar, path: "games/tugofwars" },
+    { id: 4, name: "Wrestling", image: wrestling, path: "games/wrestling" },
     {
       id: 5,
       name: "Athletics (Race)",
       image: runner,
-      path: "race",
+      path: "games/race",
     },
   ];
 

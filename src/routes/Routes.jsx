@@ -97,23 +97,23 @@ const router = createBrowserRouter([
         element: <ContactUs />,
       },
       {
-        path: "cricket",
+        path: "games/cricket",
         element: <Cricketform />,
       },
       {
-        path: "wrestling",
+        path: "games/wrestling",
         element: <Wrestling />,
       },
       {
-        path: "volleyball",
+        path: "games/volleyball",
         element: <Volleyball />,
       },
       {
-        path: "race",
+        path: "games/race",
         element: <Race />,
       },
       {
-        path: "tugofwars",
+        path: "games/tugofwars",
         element: <Tugofwars />,
       },
     ],
