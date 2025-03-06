@@ -8,6 +8,7 @@ import extraImage2 from "../../assets/aboutus2.jpg";
 import aboutmain from "../../assets/aboutmain.jpg";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
   return (
@@ -24,12 +25,14 @@ const AboutUs = () => {
         {/* Logo Section */}
         <FadeInAnimation>
           <div className="flex justify-center items-center md:mb-10 mb-5">
-            <img
-              className="w-40 md:w-48"
-              src={logo}
-              alt="Khelo Mewat Logo"
-              loading="lazy"
-            />
+            <Link to={"/"}>
+              <img
+                className="w-40 md:w-48"
+                src={logo}
+                alt="Khelo Mewat Logo"
+                loading="lazy"
+              />
+            </Link>
           </div>
         </FadeInAnimation>
 

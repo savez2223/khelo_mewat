@@ -5,6 +5,7 @@ import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import logo from "../../assets/logo/logom.png";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
 // const blockVillageData = {
 //   Nuh: ["Untka", "Adbar", "Akera"],
@@ -408,12 +409,14 @@ const Cricket = () => {
         {/* Logo Section */}
         <FadeInAnimation>
           <div className="flex justify-center items-center md:mb-10 mb-5">
-            <img
-              className="w-40 md:w-48"
-              src={logo}
-              alt="Khelo Mewat Logo"
-              loading="lazy"
-            />
+            <Link to={"/"}>
+              <img
+                className="w-40 md:w-48"
+                src={logo}
+                alt="Khelo Mewat Logo"
+                loading="lazy"
+              />
+            </Link>
           </div>
         </FadeInAnimation>
 
