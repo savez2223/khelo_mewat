@@ -32,6 +32,11 @@ import AdminContact from "../components/AdminContact";
 import AppliedTeams from "../components/AppliedTeams";
 import AdminEventsNotices from "../components/AdminEventsNotices";
 import AdminLogin from "../components/AdminLogin";
+import Cricketform from "../pages/AllForms/Cricket";
+import Wrestling from "../pages/AllForms/Wrestling";
+import Volleyball from "../pages/AllForms/Volleyball";
+import Race from "../pages/AllForms/Race";
+import Tugofwars from "../pages/AllForms/Tugofwars";
 
 // import PrivacyPolicy from "../pages/PrivacyPolicy/Privacypolicy";
 
@@ -67,7 +72,7 @@ const router = createBrowserRouter([
       {
         path: "adminlogin",
         element: <AdminLogin />,
-        },
+      },
 
       {
         path: "course/details/:id",
@@ -90,6 +95,26 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <ContactUs />,
+      },
+      {
+        path: "cricket",
+        element: <Cricketform />,
+      },
+      {
+        path: "wrestling",
+        element: <Wrestling />,
+      },
+      {
+        path: "volleyball",
+        element: <Volleyball />,
+      },
+      {
+        path: "race",
+        element: <Race />,
+      },
+      {
+        path: "tugofwars",
+        element: <Tugofwars />,
       },
     ],
   },

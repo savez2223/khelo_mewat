@@ -42,8 +42,7 @@ const ContactUs = () => {
               <div className="mt-6 space-y-3 text-gray-700 text-lg">
                 <p>
                   <strong className="text-[#E87722]">Address:</strong> District
-                  District sports office Near Radio Mewat Nuh Mewat, Haryana
-                  122107
+                  sports office Near Radio Mewat Nuh Mewat, Haryana 122107
                 </p>
                 <p>
                   <strong className="text-[#E87722]">Phone:</strong> +91
