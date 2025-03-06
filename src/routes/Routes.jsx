@@ -37,8 +37,7 @@ import Wrestling from "../pages/AllForms/Wrestling";
 import Volleyball from "../pages/AllForms/Volleyball";
 import Race from "../pages/AllForms/Race";
 import Tugofwars from "../pages/AllForms/Tugofwars";
-
-// import PrivacyPolicy from "../pages/PrivacyPolicy/Privacypolicy";
+import PrivacyPolicy from "../pages/PrivacyPolicy/Privacypolicy";
 
 const router = createBrowserRouter([
   {
@@ -116,12 +115,13 @@ const router = createBrowserRouter([
         path: "games/tugofwars",
         element: <Tugofwars />,
       },
+
+      {
+        path: "privacypolicy",
+        element: <PrivacyPolicy />,
+      },
     ],
   },
-  // {
-  //   path: "/privacypolicy",
-  //   element: <PrivacyPolicy />,
-  // },
   {
     path: "/signin",
     element: <SignIn />,

@@ -140,7 +140,7 @@ const PrivacyPolicy = () => {
             <p>
               <strong>Khelo Mewat</strong>
               <br />
-              Nuh, Mewat, Haryana 122107
+              District sports office Near Radio Mewat Nuh Mewat, Haryana 122107
               <br />
               Email:{" "}
               <a href="mailto:dsomwt@gmail.com" className="text-[#E87722]">

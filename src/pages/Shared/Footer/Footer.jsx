@@ -107,12 +107,12 @@ const Footer = () => {
               >
                 Contact Us
               </Link>
-              {/* <Link
+              <Link
                 to="/privacypolicy"
                 className="link link-hover hover:text-[#E87722]"
               >
                 Privacy Policy
-              </Link> */}
+              </Link>
             </div>
           </nav>
         </FadeInAnimation>
@@ -148,7 +148,7 @@ const Footer = () => {
             href="https://zuridox.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#E87722] hover:underline"
+            className="text-[#e78f4c] hover:underline"
           >
             <b>Zuridox</b>
           </a>

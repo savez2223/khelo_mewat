@@ -37,8 +37,8 @@ const Navbar = ({ isHomePage }) => {
         <ActiveLink to="/contact">Contact Us</ActiveLink>
       </li>
       <li>
-        <Link 
-          to="/adminlogin" 
+        <Link
+          to="/adminlogin"
           className="bg-[#E87722] text-white px-3 py-1 rounded-md hover:bg-[#d66b1c] transition-colors duration-200"
         >
           Admin Login
