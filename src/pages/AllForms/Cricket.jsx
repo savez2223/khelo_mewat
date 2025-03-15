@@ -7,12 +7,6 @@ import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
-// const blockVillageData = {
-//   Nuh: ["Untka", "Adbar", "Akera"],
-//   Punahana: ["Aminabad", "Andhaki", "Badli"],
-//   Pingwan: ["Akbarpur", "Anchwari", "Aoutha"],
-// };
-
 const blockVillageData = {
   Nuh: [
     "Untka",

@@ -448,18 +448,26 @@ const Wrestling = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700">Weight (in KG)</label>
-                <input
-                  type="number"
+                <label className="block text-gray-700">Weight Category</label>
+                <select
                   className="w-full p-2 border rounded-lg bg-white text-black"
-                  min="50"
-                  max="130"
-                  placeholder="Weight Between 50-130 KG"
                   value={Weight}
                   onChange={(e) => setWeight(e.target.value)}
                   required
-                />
+                >
+                  <option value="">Select Weight*</option>
+                  <option value="45">45 Kg</option>
+                  <option value="50">50 Kg</option>
+                  <option value="55">55 Kg</option>
+                  <option value="60">60 Kg</option>
+                  <option value="65">65 Kg</option>
+                  <option value="70">70 Kg</option>
+                  <option value="74">74 Kg</option>
+                  <option value="86">86 Kg</option>
+                  <option value="92">92 Kg</option>
+                </select>
               </div>
+
               <div className="mb-4">
                 <label className="block text-gray-700">Father's Name</label>
                 <input
