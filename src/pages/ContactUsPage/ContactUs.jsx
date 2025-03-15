@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ScrollPageTop from "../../components/ScrollPageTop/ScrollPageTop";
 import Container from "../../components/Container/Container";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
@@ -6,8 +6,60 @@ import logo from "../../assets/logo/logom.png";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { ref, push, set } from "firebase/database"; // Updated import
+import { db } from "../../firebase/firebaseConfig"; // Updated import path
 
 const ContactUs = () => {
+  // State to manage form inputs
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  // State to manage form submission status
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission to Firebase
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    try {
+      // Generate a new unique key for the message
+      const messagesRef = ref(db, "contacts");
+      const newMessageRef = push(messagesRef);
+
+      // Add data to Firebase with a timestamp
+      await set(newMessageRef, {
+        ...formData,
+        timestamp: new Date().toISOString(),
+      });
+
+      setSuccessMessage("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" }); // Reset form
+    } catch (error) {
+      setErrorMessage(
+        error.message || "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10" id="contact-us">
       <Helmet>
@@ -69,11 +121,14 @@ const ContactUs = () => {
               <h2 className="text-xl font-bold text-[#E87722] mb-4">
                 Send Us a Message
               </h2>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="block text-gray-700">Name</label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     className="w-full p-2 border rounded-lg bg-white text-black"
                     placeholder="Your Name"
                     required
@@ -83,6 +138,9 @@ const ContactUs = () => {
                   <label className="block text-gray-700">Email</label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full p-2 border rounded-lg bg-white text-black"
                     placeholder="Your Email"
                     required
@@ -91,17 +149,32 @@ const ContactUs = () => {
                 <div className="mb-4">
                   <label className="block text-gray-700">Message</label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     className="w-full p-2 border rounded-lg bg-white text-black"
                     rows="4"
                     placeholder="Your Message"
                     required
                   ></textarea>
                 </div>
+
+                {/* Display success or error messages */}
+                {successMessage && (
+                  <p className="text-green-600 mb-4">{successMessage}</p>
+                )}
+                {errorMessage && (
+                  <p className="text-red-600 mb-4">{errorMessage}</p>
+                )}
+
                 <button
                   type="submit"
-                  className="bg-[#E87722] text-white px-4 py-2 rounded-lg w-full hover:bg-[#D56B1F]"
+                  className={`bg-[#E87722] text-white px-4 py-2 rounded-lg w-full hover:bg-[#D56B1F] ${
+                    isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
               </form>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Container from "../../../components/Container/Container";
-import { ref, push } from "firebase/database"; // Import Realtime Database functions
-import { db } from "../../../firebase/firebaseConfig"; // Import Firebase config
+import { ref, push } from "firebase/database"; 
+import { db } from "../../../firebase/firebaseConfig"; 
 import { FaPhoneAlt, FaClock } from "react-icons/fa";
 import { IoMdPin } from "react-icons/io";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";

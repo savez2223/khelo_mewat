@@ -8,555 +8,582 @@ import "jspdf-autotable";
 import Cookies from "js-cookie";
 
 const AppliedTeams = () => {
-  useEffect(() => {
-    if (!Cookies.get("auth")) {
-      window.location.href = "/adminlogin";
-    }
-  }, []);
-
   const [registrations, setRegistrations] = useState([]);
   const [filteredRegistrations, setFilteredRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [tableFilter, setTableFilter] = useState("cricketRegistrations");
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
+  const logoImage = "https://i.ibb.co/Zzqjn7Ht/logom.png"
+
+  const sportOptions = [
+    { value: "cricketRegistrations", label: "Cricket" },
+    { value: "wrestlingRegistrations", label: "Wrestling" },
+    { value: "raceRegistrations", label: "Race" },
+    { value: "tugofwarRegistrations", label: "Tug of War" },
+    { value: "volleyballRegistrations", label: "Volleyball" },
+  ];
+
+  const collectionRefs = {
+    cricketRegistrations: ref(db, "cricketRegistrations"),
+    wrestlingRegistrations: ref(db, "wrestlingRegistrations"),
+    raceRegistrations: ref(db, "raceRegistrations"),
+    tugofwarRegistrations: ref(db, "tugofwarRegistrations"),
+    volleyballRegistrations: ref(db, "volleyballRegistrations"),
+  };
 
   useEffect(() => {
-    const registrationsRef = ref(db, "tournamentRegistrations");
+    if (!Cookies.get("auth")) {
+      window.location.href = "/adminlogin";
+    }
+  }, []);
 
-    const unsubscribe = onValue(
-      registrationsRef,
-      (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          const registrationsArray = Object.keys(data).map((key) => ({
-            id: key,
-            ...data[key],
-          }));
-          setRegistrations(registrationsArray);
-          filterByDate(registrationsArray, startDate, endDate);
-        } else {
-          setRegistrations([]);
-          setFilteredRegistrations([]);
-        }
+  useEffect(() => {
+    setLoading(true);
+    const unsubscribeFunctions = [];
+
+    const fetchData = (tableName, dbRef) => {
+      return new Promise((resolve) => {
+        const unsubscribe = onValue(
+          dbRef,
+          (snapshot) => {
+            const data = snapshot.val();
+            const registrationsArray = data
+              ? Object.keys(data).map((key) => ({
+                  id: key,
+                  tableName,
+                  ...data[key],
+                }))
+              : [];
+            resolve(registrationsArray);
+          },
+          (err) => {
+            setError(`Error fetching ${tableName}: ${err.message}`);
+            console.error(err);
+            resolve([]);
+          }
+        );
+        unsubscribeFunctions.push(() => off(dbRef, "value", unsubscribe));
+      });
+    };
+
+    const fetchAllData = async () => {
+      try {
+        const promises = Object.entries(collectionRefs).map(
+          ([tableName, dbRef]) => fetchData(tableName, dbRef)
+        );
+
+        const results = await Promise.all(promises);
+        const allRegistrations = results.flat();
+
+        setRegistrations(allRegistrations);
+        filterRegistrations(allRegistrations, startDate, endDate, tableFilter);
         setLoading(false);
-      },
-      (err) => {
-        setError("Failed to fetch registrations: " + err.message);
-        console.error("Error fetching registrations:", err);
+      } catch (err) {
+        setError("Failed to fetch data: " + err.message);
         setLoading(false);
       }
-    );
+    };
 
-    return () => off(registrationsRef, "value", unsubscribe);
-  }, [startDate, endDate]);
+    fetchAllData();
 
-  const filterByDate = (data, start, end) => {
-    if (!start && !end) {
-      setFilteredRegistrations(data);
-      return;
+    return () => unsubscribeFunctions.forEach((fn) => fn());
+  }, [startDate, endDate, tableFilter]);
+
+  const filterRegistrations = (data, start, end, table) => {
+    let filtered = data.filter((reg) => reg.tableName === table);
+
+    if (start || end) {
+      filtered = filtered.filter((reg) => {
+        const regDate = new Date(reg.timestamp);
+        const startDateObj = start ? new Date(start) : null;
+        const endDateObj = end ? new Date(end + "T23:59:59") : null;
+
+        return (
+          (!startDateObj || regDate >= startDateObj) &&
+          (!endDateObj || regDate <= endDateObj)
+        );
+      });
     }
-    const filtered = data.filter((reg) => {
-      const regDate = new Date(reg.timestamp);
-      const startFilter = start ? new Date(start) : null;
-      const endFilter = end ? new Date(end) : null;
-      return (
-        (!startFilter || regDate >= startFilter) &&
-        (!endFilter || regDate <= endFilter)
-      );
-    });
+
     setFilteredRegistrations(filtered);
   };
 
-  const handleDownloadPDF = async () => {
-    const doc = new jsPDF();
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF({
+      orientation: "landscape", // Use landscape for better fit
+      unit: "mm",
+      format: "a4",
+    });
     const downloadDate = new Date().toLocaleDateString("en-IN", {
       day: "2-digit",
       month: "short",
       year: "numeric",
     });
 
-    // Logo URL (replace with your actual logo URL hosted on Cloudinary or elsewhere)
-    const logoUrl = "https://i.ibb.co/0p2nGzc4/logom.png"; // Update with your logo
+    // Add logo with better positioning and scaling
+    const logoWidth = 30;
+    const logoHeight = 30;
+    doc.addImage(logoImage, "PNG", 10, 10, logoWidth, logoHeight);
 
-    try {
-      // Load logo image
-      const img = await new Promise((resolve, reject) => {
-        const image = new Image();
-        image.crossOrigin = "Anonymous"; // Handle CORS if needed
-        image.onload = () => resolve(image);
-        image.onerror = () => reject(new Error("Failed to load logo"));
-        image.src = logoUrl;
-      });
+    // Add title and date with better styling
+    doc.setFontSize(20);
+    doc.setTextColor(57, 169, 53);
+    doc.text(
+      `${
+        sportOptions.find((opt) => opt.value === tableFilter)?.label
+      } Registrations Report`,
+      50,
+      25
+    );
+    doc.setFontSize(12);
+    doc.setTextColor(100);
+    doc.text(`Generated on: ${downloadDate}`, 50, 35);
 
-      // Add logo at the top-left
-      doc.addImage(img, "PNG", 14, 10, 30, 15); // Adjust size as needed (width: 30, height: 15)
+    // Define columns with consistent naming and styling
+    const columns = [
+      { title: "Team", dataKey: "teamName" },
+      { title: "Player", dataKey: "playerName" },
+      { title: "Players Count", dataKey: "numPlayers" },
+      { title: "Father's Name", dataKey: "fatherName" },
+      { title: "Gender", dataKey: "gender" },
+      { title: "DOB", dataKey: "dob" },
+      { title: "Ward", dataKey: "ward" },
+      { title: "Block", dataKey: "block" },
+      { title: "Village", dataKey: "village" },
+      { title: "Aadhaar", dataKey: "aadhaar" },
+      { title: "Mobile", dataKey: "mobile" },
+      { title: "Registered At", dataKey: "timestamp" },
+    ].filter((col) => {
+      if (
+        col.dataKey === "numPlayers" &&
+        !["cricketRegistrations", "tugofwarRegistrations"].includes(tableFilter)
+      )
+        return false;
+      return true;
+    });
 
-      // Add title and date aligned to the right of the logo
-      doc.setFontSize(16);
-      doc.setFont("helvetica", "bold");
-      doc.text("Applied Teams/Players Report", 50, 18);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      doc.text(`Download Date: ${downloadDate}`, 50, 25);
-
-      // Add a horizontal line below the header
-      doc.setLineWidth(0.5);
-      doc.setDrawColor(57, 169, 53); // #39A935
-      doc.line(14, 30, 196, 30); // From (x1, y1) to (x2, y2)
-
-      // Prepare table data
-      const tableData = filteredRegistrations.map((reg) => [
-        reg.playerName || "N/A",
-        reg.tournamentName || "N/A",
-        reg.fatherName || "N/A",
-        reg.gender || "N/A",
-        reg.ward || "N/A",
-        reg.block || "N/A",
-        reg.village || "N/A",
-        reg.aadhar || "N/A",
-        reg.mobile || "N/A",
-
-        reg.timestamp ? new Date(reg.timestamp).toLocaleString() : "N/A",
-      ]);
-
-      // Generate table
-      doc.autoTable({
-        startY: 35,
-        head: [
-          [
-            "Player Name",
-            "Tournament",
-            "Father's Name",
-            "Gender",
-            "Ward No",
-            "Block",
-            "Village",
-            "Aadhar",
-            "Mobile",
-
-            "Registration Date",
-          ],
-        ],
-        body: tableData,
-        styles: {
-          fontSize: 8,
-          overflow: "linebreak",
-          cellPadding: 2,
-          textColor: [33, 33, 33], // Dark gray for readability
-        },
-        headStyles: {
-          fillColor: [57, 169, 53], // #39A935
-          textColor: 255,
-          fontStyle: "bold",
-          halign: "center",
-        },
-        columnStyles: {
-          0: { cellWidth: 20 }, // Player Name
-          1: { cellWidth: 20 }, // Tournament
-          2: { cellWidth: 20 }, // Father's Name
-          3: { cellWidth: 15 }, // Gender
-          4: { cellWidth: 15 }, // Ward No
-          5: { cellWidth: 15 }, // Block
-          6: { cellWidth: 20 }, // Village
-          7: { cellWidth: 20 }, // Aadhar
-          8: { cellWidth: 20 }, // Mobile
-          11: { cellWidth: 25 }, // Registration Date
-        },
-        alternateRowStyles: {
-          fillColor: [245, 245, 245], // Light gray for alternate rows
-        },
-        margin: { top: 35, left: 14, right: 14 },
-      });
-
-      // Add footer with page number
-      const pageCount = doc.internal.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(100);
+    // Generate table
+    doc.autoTable({
+      columns: columns,
+      body: filteredRegistrations.map((reg) => ({
+        teamName: reg.teamName || "N/A",
+        playerName: reg.playerName || "N/A",
+        numPlayers: reg.numPlayers || "N/A",
+        fatherName: reg.fatherName || "N/A",
+        gender: reg.gender || "N/A",
+        dob: reg.dob || "N/A",
+        ward: reg.wardNo || reg.ward || "N/A",
+        block: reg.block || "N/A",
+        village: reg.village || "N/A",
+        aadhaar: reg.aadhaar || reg.aadhar || "N/A",
+        mobile: reg.mobile || "N/A",
+        timestamp: reg.timestamp
+          ? new Date(reg.timestamp).toLocaleString()
+          : "N/A",
+      })),
+      startY: 50,
+      theme: "grid",
+      styles: {
+        fontSize: 10,
+        cellPadding: 3,
+        overflow: "linebreak",
+        halign: "center",
+      },
+      headStyles: {
+        fillColor: [57, 169, 53],
+        textColor: 255,
+        fontSize: 12,
+        halign: "center",
+      },
+      bodyStyles: {
+        textColor: 50,
+        lineColor: [150, 150, 150],
+      },
+      columnStyles: {
+        teamName: { cellWidth: 25 },
+        playerName: { cellWidth: 25 },
+        numPlayers: { cellWidth: 20 },
+        fatherName: { cellWidth: 25 },
+        gender: { cellWidth: 20 },
+        dob: { cellWidth: 20 },
+        ward: { cellWidth: 20 },
+        block: { cellWidth: 20 },
+        village: { cellWidth: 25 },
+        aadhaar: { cellWidth: 25 },
+        mobile: { cellWidth: 25 },
+        timestamp: { cellWidth: 30 },
+      },
+      didDrawPage: (data) => {
+        // Add page numbers
+        doc.setFontSize(10);
         doc.text(
-          `Page ${i} of ${pageCount}`,
-          14,
-          doc.internal.pageSize.height - 10
+          `Page ${doc.internal.getNumberOfPages()}`,
+          doc.internal.pageSize.width / 2,
+          doc.internal.pageSize.height - 10,
+          { align: "center" }
         );
-      }
+      },
+    });
 
-      doc.save(`teams_report_${downloadDate.replace(/ /g, "_")}.pdf`);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      // Fallback without logo if image fails
-      doc.setFontSize(16);
-      doc.setFont("helvetica", "bold");
-      doc.text("Applied Teams/Players Report", 14, 20);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      doc.text(`Download Date: ${downloadDate}`, 14, 28);
-      doc.setLineWidth(0.5);
-      doc.setDrawColor(57, 169, 53);
-      doc.line(14, 30, 196, 30);
-
-      const tableData = filteredRegistrations.map((reg) => [
-        reg.playerName || "N/A",
-        reg.tournamentName || "N/A",
-        reg.fatherName || "N/A",
-        reg.gender || "N/A",
-        reg.ward || "N/A",
-        reg.block || "N/A",
-        reg.village || "N/A",
-        reg.aadhar || "N/A",
-        reg.mobile || "N/A",
-        reg.timestamp ? new Date(reg.timestamp).toLocaleString() : "N/A",
-      ]);
-
-      doc.autoTable({
-        startY: 35,
-        head: [
-          [
-            "Player Name",
-            "Tournament",
-            "Father's Name",
-            "Gender",
-            "Ward No",
-            "Block",
-            "Village",
-            "Aadhar",
-            "Mobile",
-            "Registration Date",
-          ],
-        ],
-        body: tableData,
-        styles: { fontSize: 8, overflow: "linebreak", cellPadding: 2 },
-        headStyles: {
-          fillColor: [57, 169, 53],
-          textColor: 255,
-          fontStyle: "bold",
-        },
-        columnStyles: {
-          9: { cellWidth: 20 },
-          10: { cellWidth: 25 },
-        },
-      });
-
-      doc.save(`teams_report_${downloadDate.replace(/ /g, "_")}.pdf`);
-    }
+    doc.save(`${tableFilter}_report_${downloadDate}.pdf`);
   };
 
   const handleEdit = (registration) => {
     setEditingId(registration.id);
-    setEditForm({ ...registration });
+    setEditForm({
+      ...registration,
+      wardNo: registration.wardNo || registration.ward,
+      aadhaar: registration.aadhaar || registration.aadhar,
+      village: registration.village || "",
+    });
   };
 
   const handleEditChange = (e) => {
-    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setEditForm((prev) => ({
+      ...prev,
+      [name]:
+        name === "numPlayers" || name === "weight"
+          ? Math.max(0, parseInt(value) || 0)
+          : value,
+    }));
   };
 
-  const handleUpdate = async (id) => {
+  const handleUpdate = async (id, tableName) => {
     try {
-      const registrationRef = ref(db, `tournamentRegistrations/${id}`);
-      await update(registrationRef, editForm);
+      const updates = { ...editForm };
+      delete updates.id;
+      delete updates.tableName;
+      delete updates.timestamp;
+
+      await update(ref(db, `${tableName}/${id}`), updates);
       setEditingId(null);
     } catch (error) {
-      setError("Failed to update registration.");
-      console.error("Error updating registration:", error);
+      setError("Update failed: " + error.message);
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this registration?")) {
+  const handleDelete = async (id, tableName) => {
+    if (window.confirm("Delete this registration permanently?")) {
       try {
-        const registrationRef = ref(db, `tournamentRegistrations/${id}`);
-        await remove(registrationRef);
+        await remove(ref(db, `${tableName}/${id}`));
       } catch (error) {
-        setError("Failed to delete registration.");
-        console.error("Error deleting registration:", error);
+        setError("Delete failed: " + error.message);
       }
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-xl text-gray-600">Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-xl text-red-500">{error}</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="text-center p-8">Loading...</div>;
+  if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
 
   return (
-    <div className="bg-[#F5F6F5] py-10 md:py-20">
+    <div className="bg-gray-50 min-h-screen p-8">
       <Container>
-        <SectionHeader
-          heading={
-            <span style={{ color: "#E87722" }}>Applied Teams/Players</span>
-          }
-        />
-        <div className="mb-6 flex flex-col md:flex-row gap-4">
+        <SectionHeader heading="Applied Teams/Players Management" />
+
+        <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-lg shadow">
           <div>
-            <label className="block text-gray-700 font-medium">
-              Start Date
-            </label>
+            <label className="block mb-2 font-medium">Sport Category</label>
+            <select
+              value={tableFilter}
+              onChange={(e) => setTableFilter(e.target.value)}
+              className="w-full p-2 border rounded"
+            >
+              {sportOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Start Date</label>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="px-4 py-2 border rounded-lg"
+              className="w-full p-2 border rounded"
             />
           </div>
+
           <div>
-            <label className="block text-gray-700 font-medium">End Date</label>
+            <label className="block mb-2 font-medium">End Date</label>
             <input
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="px-4 py-2 border rounded-lg"
+              className="w-full p-2 border rounded"
             />
           </div>
+        </div>
+
+        <div className="mb-4 flex justify-end">
           <button
             onClick={handleDownloadPDF}
-            className="px-6 py-2 bg-[#E87722] text-white rounded-lg hover:bg-[#39A935] self-end"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
-            Download PDF
+            Export PDF
           </button>
         </div>
-        {filteredRegistrations.length === 0 ? (
-          <p className="text-center text-gray-600 text-lg">
-            No registrations found.
-          </p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white rounded-lg shadow-md">
-              <thead>
-                <tr className="bg-[#39A935] text-white">
-                  <th className="py-3 px-4 text-left">Player Name</th>
-                  <th className="py-3 px-4 text-left">Tournament</th>
-                  <th className="py-3 px-4 text-left">Father's Name</th>
-                  <th className="py-3 px-4 text-left">Gender</th>
-                  <th className="py-3 px-4 text-left">Ward No</th>
-                  <th className="py-3 px-4 text-left">Block</th>
-                  <th className="py-3 px-4 text-left">Village</th>
-                  <th className="py-3 px-4 text-left">Aadhar</th>
-                  <th className="py-3 px-4 text-left">Mobile</th>
-                  <th className="py-3 px-4 text-left">Entry Form</th>
-                  <th className="py-3 px-4 text-left">Sarpanch Performa</th>
-                  <th className="py-3 px-4 text-left">Registration Date</th>
-                  <th className="py-3 px-4 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredRegistrations.map((registration) => (
-                  <tr
-                    key={registration.id}
-                    className="border-b hover:bg-gray-100"
-                  >
-                    {editingId === registration.id ? (
-                      <>
-                        <td className="py-3 px-4">
+
+        <div className="overflow-x-auto bg-white rounded-lg shadow">
+          <table className="min-w-full">
+            <thead className="bg-gray-800 text-white">
+              <tr>
+                <th className="p-3 text-left">Team</th>
+                <th className="p-3 text-left">Player</th>
+                {["cricketRegistrations", "tugofwarRegistrations"].includes(
+                  tableFilter
+                ) && <th className="p-3 text-left">Players</th>}
+                {tableFilter === "wrestlingRegistrations" && (
+                  <th className="p-3 text-left">Weight</th>
+                )}
+                {tableFilter === "raceRegistrations" && (
+                  <th className="p-3 text-left">Race Type</th>
+                )}
+                <th className="p-3 text-left">Father</th>
+                <th className="p-3 text-left">Gender</th>
+                <th className="p-3 text-left">DOB</th>
+                <th className="p-3 text-left">Ward</th>
+                <th className="p-3 text-left">Block</th>
+                <th className="p-3 text-left">Village</th>
+                <th className="p-3 text-left">Aadhaar</th>
+                <th className="p-3 text-left">Mobile</th>
+                <th className="p-3 text-left">Documents</th>
+                <th className="p-3 text-left">Registered</th>
+                <th className="p-3 text-left">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {filteredRegistrations.map((reg) => (
+                <tr key={reg.id} className="border-b hover:bg-gray-50">
+                  {editingId === reg.id ? (
+                    <>
+                      <td className="p-3">
+                        <input
+                          name="teamName"
+                          value={editForm.teamName || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="playerName"
+                          value={editForm.playerName || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      {["cricketRegistrations", "tugofwarRegistrations"].includes(
+                        tableFilter
+                      ) && (
+                        <td className="p-3">
                           <input
-                            name="playerName"
-                            value={editForm.playerName || ""}
+                            type="number"
+                            name="numPlayers"
+                            value={editForm.numPlayers || 0}
                             onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
+                            className="w-full p-1 border rounded"
                           />
                         </td>
-                        <td className="py-3 px-4">
+                      )}
+                      {tableFilter === "wrestlingRegistrations" && (
+                        <td className="p-3">
                           <input
-                            name="tournamentName"
-                            value={editForm.tournamentName || ""}
+                            type="number"
+                            name="weight"
+                            value={editForm.weight || 0}
                             onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
+                            className="w-full p-1 border rounded"
                           />
                         </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="fatherName"
-                            value={editForm.fatherName || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
-                        </td>
-                        <td className="py-3 px-4">
+                      )}
+                      {tableFilter === "raceRegistrations" && (
+                        <td className="p-3">
                           <select
-                            name="gender"
-                            value={editForm.gender || ""}
+                            name="raceDistance"
+                            value={editForm.raceDistance || ""}
                             onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
+                            className="w-full p-1 border rounded"
                           >
-                            <option value="">Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
+                            <option value="5 km">5 km</option>
+                            <option value="10 km">10 km</option>
                           </select>
                         </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="ward"
-                            value={editForm.ward || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
+                      )}
+                      <td className="p-3">
+                        <input
+                          name="fatherName"
+                          value={editForm.fatherName || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <select
+                          name="gender"
+                          value={editForm.gender || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        >
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                      </td>
+                      <td className="p-3">
+                        <input
+                          type="date"
+                          name="dob"
+                          value={editForm.dob || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="wardNo"
+                          value={editForm.wardNo || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="block"
+                          value={editForm.block || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="village"
+                          value={editForm.village || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="aadhaar"
+                          value={editForm.aadhaar || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <input
+                          name="mobile"
+                          value={editForm.mobile || ""}
+                          onChange={handleEditChange}
+                          className="w-full p-1 border rounded"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <span className="text-gray-500">
+                          (Files can't be edited)
+                        </span>
+                      </td>
+                      <td className="p-3">
+                        {new Date(reg.timestamp).toLocaleString()}
+                      </td>
+                      <td className="p-3 space-x-2">
+                        <button
+                          onClick={() => handleUpdate(reg.id, reg.tableName)}
+                          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => setEditingId(null)}
+                          className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"
+                        >
+                          Cancel
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td className="p-3">{reg.teamName || "N/A"}</td>
+                      <td className="p-3">{reg.playerName || "N/A"}</td>
+                      {["cricketRegistrations", "tugofwarRegistrations"].includes(
+                        tableFilter
+                      ) && <td className="p-3">{reg.numPlayers || "N/A"}</td>}
+                      {tableFilter === "wrestlingRegistrations" && (
+                        <td className="p-3">
+                          {reg.weight ? `${reg.weight} kg` : "N/A"}
                         </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="block"
-                            value={editForm.block || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
-                        </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="village"
-                            value={editForm.village || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
-                        </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="aadhar"
-                            value={editForm.aadhar || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
-                        </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="mobile"
-                            value={editForm.mobile || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
-                        </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="entryFormUrl"
-                            value={editForm.entryFormUrl || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
-                        </td>
-                        <td className="py-3 px-4">
-                          <input
-                            name="sarpanchPerformaUrl"
-                            value={editForm.sarpanchPerformaUrl || ""}
-                            onChange={handleEditChange}
-                            className="px-2 py-1 border rounded"
-                          />
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.timestamp
-                            ? new Date(registration.timestamp).toLocaleString()
-                            : "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          <button
-                            onClick={() => handleUpdate(registration.id)}
-                            className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                      )}
+                      {tableFilter === "raceRegistrations" && (
+                        <td className="p-3">{reg.raceDistance || "N/A"}</td>
+                      )}
+                      <td className="p-3">{reg.fatherName || "N/A"}</td>
+                      <td className="p-3">{reg.gender || "N/A"}</td>
+                      <td className="p-3">{reg.dob || "N/A"}</td>
+                      <td className="p-3">{reg.wardNo || reg.ward || "N/A"}</td>
+                      <td className="p-3">{reg.block || "N/A"}</td>
+                      <td className="p-3">{reg.village || "N/A"}</td>
+                      <td className="p-3">{reg.aadhaar || reg.aadhar || "N/A"}</td>
+                      <td className="p-3">{reg.mobile || "N/A"}</td>
+                      <td className="p-3 space-x-2">
+                        {reg.entryFormUrl && (
+                          <a
+                            href={reg.entryFormUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline"
                           >
-                            Save
-                          </button>
-                          <button
-                            onClick={() => setEditingId(null)}
-                            className="ml-2 px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
+                            Entry
+                          </a>
+                        )}
+                        {reg.sarpanchPerformaUrl && (
+                          <a
+                            href={reg.sarpanchPerformaUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline"
                           >
-                            Cancel
-                          </button>
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        <td className="py-3 px-4">
-                          {registration.playerName || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.tournamentName || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.fatherName || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.gender || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.ward || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.block || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.village || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.aadhar || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.mobile || "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.entryFormUrl ? (
-                            <a
-                              href={registration.entryFormUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-500 hover:underline"
-                            >
-                              Download
-                            </a>
-                          ) : (
-                            "N/A"
-                          )}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.sarpanchPerformaUrl ? (
-                            <a
-                              href={registration.sarpanchPerformaUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-500 hover:underline"
-                            >
-                              Download
-                            </a>
-                          ) : (
-                            "N/A"
-                          )}
-                        </td>
-                        <td className="py-3 px-4">
-                          {registration.timestamp
-                            ? new Date(registration.timestamp).toLocaleString()
-                            : "N/A"}
-                        </td>
-                        <td className="py-3 px-4">
-                          <button
-                            onClick={() => handleEdit(registration)}
-                            className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDelete(registration.id)}
-                            className="ml-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                            Performa
+                          </a>
+                        )}
+                      </td>
+                      <td className="p-3">
+                        {new Date(reg.timestamp).toLocaleString()}
+                      </td>
+                      <td className="p-3 space-x-2">
+                        <button
+                          onClick={() => handleEdit(reg)}
+                          className="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(reg.id, reg.tableName)}
+                          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {filteredRegistrations.length === 0 && (
+            <div className="p-6 text-center text-gray-500">
+              No registrations found for selected criteria
+            </div>
+          )}
+        </div>
       </Container>
     </div>
   );
