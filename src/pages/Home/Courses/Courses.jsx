@@ -25,7 +25,7 @@ const Courses = () => {
     { id: 4, name: "Wrestling", image: wrestling, path: "games/wrestling" },
     {
       id: 5,
-      name: "Athletics (Race)",
+      name: "Athletics",
       image: runner,
       path: "games/race",
     },

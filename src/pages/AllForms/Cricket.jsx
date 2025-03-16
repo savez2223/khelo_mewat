@@ -6,11 +6,6 @@ import logo from "../../assets/logo/logom.png";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-=======
-import { db } from "../../firebase/firebaseConfig"; // Adjust the path to your firebase config file
-import { ref, push, set } from "firebase/database";
->>>>>>> f5943c88d8eb1582d0feee929682101f89a1eb7d
 
 const blockVillageData = {
   Nuh: [
@@ -367,7 +362,7 @@ const Cricket = () => {
     aadhaar: "",
     mobile: "",
     entryForm: null,
-    sarpanchPerforma: null
+    sarpanchPerforma: null,
   });
   const [villages, setVillages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -423,12 +418,18 @@ const Cricket = () => {
       });
       const data = await response.json();
       if (!data.secure_url) {
-        throw new Error(`Cloudinary upload failed for ${fileType}: ${data.error?.message || 'Unknown error'}`);
+        throw new Error(
+          `Cloudinary upload failed for ${fileType}: ${
+            data.error?.message || "Unknown error"
+          }`
+        );
       }
       console.log(`${fileType} uploaded successfully: ${data.secure_url}`);
       return data.secure_url;
     } catch (err) {
-      throw new Error(`Cloudinary upload failed for ${fileType}: ${err.message}`);
+      throw new Error(
+        `Cloudinary upload failed for ${fileType}: ${err.message}`
+      );
     }
   };
 
@@ -445,8 +446,14 @@ const Cricket = () => {
       }
 
       // Upload files to Cloudinary
-      const entryFormUrl = await uploadToCloudinary(formData.entryForm, "Entry Form");
-      const sarpanchPerformaUrl = await uploadToCloudinary(formData.sarpanchPerforma, "Sarpanch Performa");
+      const entryFormUrl = await uploadToCloudinary(
+        formData.entryForm,
+        "Entry Form"
+      );
+      const sarpanchPerformaUrl = await uploadToCloudinary(
+        formData.sarpanchPerforma,
+        "Sarpanch Performa"
+      );
 
       // Prepare data for Firebase
       const registrationData = {
@@ -463,12 +470,12 @@ const Cricket = () => {
         mobile: formData.mobile,
         entryFormUrl: entryFormUrl,
         sarpanchPerformaUrl: sarpanchPerformaUrl,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       console.log("Data to be sent to Firebase:", registrationData);
 
-      const cricketRef = ref(db, 'cricketRegistrations');
+      const cricketRef = ref(db, "cricketRegistrations");
       const newRegistrationRef = push(cricketRef);
 
       await set(newRegistrationRef, registrationData);
@@ -487,7 +494,7 @@ const Cricket = () => {
         aadhaar: "",
         mobile: "",
         entryForm: null,
-        sarpanchPerforma: null
+        sarpanchPerforma: null,
       });
       setVillages([]);
     } catch (err) {
@@ -499,18 +506,28 @@ const Cricket = () => {
   };
 
   return (
-    <div className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10" id="participate-now">
+    <div
+      className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10"
+      id="participate-now"
+    >
       <Helmet>
         <title>Apply for Cricket - Khelo Mewat</title>
       </Helmet>
       <ScrollPageTop />
       <Container>
-        <SectionHeader heading={<span style={{ color: "#E87722" }}>Apply for Cricket</span>} />
+        <SectionHeader
+          heading={<span style={{ color: "#E87722" }}>Apply for Cricket</span>}
+        />
 
         <FadeInAnimation>
           <div className="flex justify-center items-center md:mb-10 mb-5">
             <Link to={"/"}>
-              <img className="w-40 md:w-48" src={logo} alt="Khelo Mewat Logo" loading="lazy" />
+              <img
+                className="w-40 md:w-48"
+                src={logo}
+                alt="Khelo Mewat Logo"
+                loading="lazy"
+              />
             </Link>
           </div>
         </FadeInAnimation>
@@ -666,7 +683,9 @@ const Cricket = () => {
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-700">Captain Aadhaar Number</label>
+                <label className="block text-gray-700">
+                  Captain Aadhaar Number
+                </label>
                 <input
                   type="text"
                   name="aadhaar"
@@ -679,7 +698,9 @@ const Cricket = () => {
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-700">Captain Mobile Number</label>
+                <label className="block text-gray-700">
+                  Captain Mobile Number
+                </label>
                 <input
                   type="tel"
                   name="mobile"
@@ -723,10 +744,12 @@ const Cricket = () => {
                 type="submit"
                 disabled={loading || error !== null}
                 className={`bg-[#E87722] text-white px-4 py-2 rounded-lg w-full hover:bg-[#39A935] ${
-                  (loading || error !== null) ? 'opacity-50 cursor-not-allowed' : ''
+                  loading || error !== null
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
                 }`}
               >
-                {loading ? 'Submitting...' : 'Submit Application'}
+                {loading ? "Submitting..." : "Submit Application"}
               </button>
             </form>
           </div>

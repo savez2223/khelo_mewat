@@ -6,9 +6,10 @@ import logo from "../../assets/logo/logom.png";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { db } from "../../firebase/firebaseConfig"; // Adjust the path to your firebase config file
+import { db } from "../../firebase/firebaseConfig";
 import { ref, push, set } from "firebase/database";
 
+// Block and Village Data
 const blockVillageData = {
   Nuh: [
     "Untka",
@@ -350,6 +351,20 @@ const blockVillageData = {
   ],
 };
 
+// Events Data
+const events = {
+  Running: [
+    "100 Mtr.",
+    "200 Mtr.",
+    "400 Mtr.",
+    "800 Mtr.",
+    "1500 Mtr.",
+    "3000 Mtr.",
+  ],
+  Jumping: ["Long Jump", "Triple Jump"],
+  Throwing: ["Discuss Throw", "Shot Put", "Javelin Throw"],
+};
+
 const Race = () => {
   const [formData, setFormData] = useState({
     teamName: "",
@@ -364,8 +379,11 @@ const Race = () => {
     aadhaar: "",
     mobile: "",
     entryForm: null,
-    sarpanchPerforma: null
+    sarpanchPerforma: null,
+    eventType: "",
+    eventCategory: "",
   });
+
   const [villages, setVillages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -377,6 +395,17 @@ const Race = () => {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
+
+    // Handle event type and category specifically
+    if (name === "eventType") {
+      setFormData({
+        ...formData,
+        [name]: value,
+        eventCategory: "", // Reset category when type changes
+      });
+      return;
+    }
+
     if (name === "aadhaar") {
       const aadhaarValue = value.replace(/\D/g, "").slice(0, 12);
       setFormData({ ...formData, [name]: aadhaarValue });
@@ -391,7 +420,7 @@ const Race = () => {
           return;
         }
         setFormData({ ...formData, [name]: file });
-        setError(null); // Clear error when a valid file is selected
+        setError(null);
       }
     } else {
       setFormData({ ...formData, [name]: value });
@@ -418,19 +447,29 @@ const Race = () => {
         method: "POST",
         body: formData,
       });
+
       const data = await response.json();
+
       if (!data.secure_url) {
-        throw new Error(`Cloudinary upload failed for ${fileType}: ${data.error?.message || 'Unknown error'}`);
+        throw new Error(
+          `Cloudinary upload failed for ${fileType}: ${
+            data.error?.message || "Unknown error"
+          }`
+        );
       }
+
       console.log(`${fileType} uploaded successfully: ${data.secure_url}`);
       return data.secure_url;
     } catch (err) {
-      throw new Error(`Cloudinary upload failed for ${fileType}: ${err.message}`);
+      throw new Error(
+        `Cloudinary upload failed for ${fileType}: ${err.message}`
+      );
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -442,35 +481,33 @@ const Race = () => {
       }
 
       // Upload files to Cloudinary
-      const entryFormUrl = await uploadToCloudinary(formData.entryForm, "Entry Form");
-      const sarpanchPerformaUrl = await uploadToCloudinary(formData.sarpanchPerforma, "Sarpanch Performa");
+      const entryFormUrl = await uploadToCloudinary(
+        formData.entryForm,
+        "Entry Form"
+      );
+
+      const sarpanchPerformaUrl = await uploadToCloudinary(
+        formData.sarpanchPerforma,
+        "Sarpanch Performa"
+      );
 
       // Prepare data for Firebase
       const registrationData = {
-        teamName: formData.teamName,
-        playerName: formData.playerName,
-        fatherName: formData.fatherName,
-        gender: formData.gender,
-        dob: formData.dob,
-        block: formData.block,
-        village: formData.village,
-        wardNo: formData.wardNo,
-        raceDistance: formData.raceDistance,
-        aadhaar: formData.aadhaar,
-        mobile: formData.mobile,
-        entryFormUrl: entryFormUrl,
-        sarpanchPerformaUrl: sarpanchPerformaUrl,
-        timestamp: new Date().toISOString()
+        ...formData,
+        entryFormUrl,
+        sarpanchPerformaUrl,
+        timestamp: new Date().toISOString(),
       };
 
       console.log("Data to be sent to Firebase:", registrationData);
 
-      const raceRef = ref(db, 'raceRegistrations');
+      const raceRef = ref(db, "raceRegistrations");
       const newRegistrationRef = push(raceRef);
 
       await set(newRegistrationRef, registrationData);
 
       setSuccess(true);
+      // Reset form
       setFormData({
         teamName: "",
         playerName: "",
@@ -484,7 +521,9 @@ const Race = () => {
         aadhaar: "",
         mobile: "",
         entryForm: null,
-        sarpanchPerforma: null
+        sarpanchPerforma: null,
+        eventType: "",
+        eventCategory: "",
       });
       setVillages([]);
     } catch (err) {
@@ -496,18 +535,28 @@ const Race = () => {
   };
 
   return (
-    <div className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10" id="participate-now">
+    <div
+      className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10"
+      id="participate-now"
+    >
       <Helmet>
         <title>Apply for Race - Khelo Mewat</title>
       </Helmet>
       <ScrollPageTop />
       <Container>
-        <SectionHeader heading={<span style={{ color: "#E87722" }}>Apply for Race</span>} />
+        <SectionHeader
+          heading={<span style={{ color: "#E87722" }}>Apply for Race</span>}
+        />
 
         <FadeInAnimation>
           <div className="flex justify-center items-center md:mb-10 mb-5">
             <Link to={"/"}>
-              <img className="w-40 md:w-48" src={logo} alt="Khelo Mewat Logo" loading="lazy" />
+              <img
+                className="w-40 md:w-48"
+                src={logo}
+                alt="Khelo Mewat Logo"
+                loading="lazy"
+              />
             </Link>
           </div>
         </FadeInAnimation>
@@ -530,6 +579,46 @@ const Race = () => {
             )}
 
             <form onSubmit={handleSubmit}>
+              {/* New Event Type Field */}
+              <div className="mb-4">
+                <label className="block text-gray-700">Event Type</label>
+                <select
+                  name="eventType"
+                  value={formData.eventType}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded-lg bg-white text-black"
+                  required
+                >
+                  <option value="">Select Event Type</option>
+                  {Object.keys(events).map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Dynamic Event Category Field */}
+              {formData.eventType && (
+                <div className="mb-4">
+                  <label className="block text-gray-700">Event Category</label>
+                  <select
+                    name="eventCategory"
+                    value={formData.eventCategory}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded-lg bg-white text-black"
+                    required
+                  >
+                    <option value="">Select Event Category</option>
+                    {events[formData.eventType].map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               <div className="mb-4">
                 <label className="block text-gray-700">Team Name</label>
                 <input
@@ -649,27 +738,6 @@ const Race = () => {
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-700">Race</label>
-                <select
-                  name="raceDistance"
-                  value={formData.raceDistance}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border rounded-lg bg-white text-black"
-                  required
-                >
-                  <option value="">Select Race</option>
-                  <option value="100">100 meters</option>
-                  <option value="200">200 meters</option>
-                  <option value="400">400 meters</option>
-                  <option value="800">800 meters</option>
-                  <option value="1600">1600 meters</option>
-                  <option value="2000">2 km</option>
-                  <option value="3000">3 km</option>
-                  <option value="5000">5 km</option>
-                </select>
-              </div>
-
-              <div className="mb-4">
                 <label className="block text-gray-700">Aadhaar Number</label>
                 <input
                   type="text"
@@ -727,10 +795,12 @@ const Race = () => {
                 type="submit"
                 disabled={loading || error !== null}
                 className={`bg-[#E87722] text-white px-4 py-2 rounded-lg w-full hover:bg-[#39A935] ${
-                  (loading || error !== null) ? 'opacity-50 cursor-not-allowed' : ''
+                  loading || error !== null
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
                 }`}
               >
-                {loading ? 'Submitting...' : 'Submit Application'}
+                {loading ? "Submitting..." : "Submit Application"}
               </button>
             </form>
           </div>
