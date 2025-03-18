@@ -6,8 +6,8 @@ import logo from "../../assets/logo/logom.png";
 import FadeInAnimation from "../../components/FadeInAnimation/FadeInAnimation";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { ref, push, set } from "firebase/database"; // Updated import
-import { db } from "../../firebase/firebaseConfig"; // Updated import path
+import { ref, push, set } from "firebase/database"; 
+import { db } from "../../firebase/firebaseConfig"; 
 
 const ContactUs = () => {
   // State to manage form inputs

@@ -17,7 +17,7 @@ const AppliedTeams = () => {
   const [tableFilter, setTableFilter] = useState("cricketRegistrations");
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
-  const logoImage = "https://i.ibb.co/Zzqjn7Ht/logom.png"
+  const logoImage = "https://i.ibb.co/Zzqjn7Ht/logom.png";
 
   const sportOptions = [
     { value: "cricketRegistrations", label: "Cricket" },
@@ -26,6 +26,20 @@ const AppliedTeams = () => {
     { value: "tugofwarRegistrations", label: "Tug of War" },
     { value: "volleyballRegistrations", label: "Volleyball" },
   ];
+
+  // Race-specific event types and categories (from Race component)
+  const raceEvents = {
+    Running: [
+      "100 Mtr.",
+      "200 Mtr.",
+      "400 Mtr.",
+      "800 Mtr.",
+      "1500 Mtr.",
+      "3000 Mtr.",
+    ],
+    Jumping: ["Long Jump", "Triple Jump"],
+    Throwing: ["Discus Throw", "Shot Put", "Javelin Throw"],
+  };
 
   const collectionRefs = {
     cricketRegistrations: ref(db, "cricketRegistrations"),
@@ -114,7 +128,7 @@ const AppliedTeams = () => {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF({
-      orientation: "landscape", // Use landscape for better fit
+      orientation: "landscape",
       unit: "mm",
       format: "a4",
     });
@@ -124,12 +138,10 @@ const AppliedTeams = () => {
       year: "numeric",
     });
 
-    // Add logo with better positioning and scaling
     const logoWidth = 30;
     const logoHeight = 30;
     doc.addImage(logoImage, "PNG", 10, 10, logoWidth, logoHeight);
 
-    // Add title and date with better styling
     doc.setFontSize(20);
     doc.setTextColor(57, 169, 53);
     doc.text(
@@ -143,11 +155,16 @@ const AppliedTeams = () => {
     doc.setTextColor(100);
     doc.text(`Generated on: ${downloadDate}`, 50, 35);
 
-    // Define columns with consistent naming and styling
     const columns = [
       { title: "Team", dataKey: "teamName" },
       { title: "Player", dataKey: "playerName" },
       { title: "Players Count", dataKey: "numPlayers" },
+      ...(tableFilter === "raceRegistrations"
+        ? [
+            { title: "Event Type", dataKey: "eventType" },
+            { title: "Event Category", dataKey: "eventCategory" },
+          ]
+        : []),
       { title: "Father's Name", dataKey: "fatherName" },
       { title: "Gender", dataKey: "gender" },
       { title: "DOB", dataKey: "dob" },
@@ -166,13 +183,14 @@ const AppliedTeams = () => {
       return true;
     });
 
-    // Generate table
     doc.autoTable({
       columns: columns,
       body: filteredRegistrations.map((reg) => ({
         teamName: reg.teamName || "N/A",
         playerName: reg.playerName || "N/A",
         numPlayers: reg.numPlayers || "N/A",
+        eventType: reg.eventType || "N/A",
+        eventCategory: reg.eventCategory || "N/A",
         fatherName: reg.fatherName || "N/A",
         gender: reg.gender || "N/A",
         dob: reg.dob || "N/A",
@@ -207,6 +225,8 @@ const AppliedTeams = () => {
         teamName: { cellWidth: 25 },
         playerName: { cellWidth: 25 },
         numPlayers: { cellWidth: 20 },
+        eventType: { cellWidth: 25 },
+        eventCategory: { cellWidth: 25 },
         fatherName: { cellWidth: 25 },
         gender: { cellWidth: 20 },
         dob: { cellWidth: 20 },
@@ -218,7 +238,6 @@ const AppliedTeams = () => {
         timestamp: { cellWidth: 30 },
       },
       didDrawPage: (data) => {
-        // Add page numbers
         doc.setFontSize(10);
         doc.text(
           `Page ${doc.internal.getNumberOfPages()}`,
@@ -239,6 +258,8 @@ const AppliedTeams = () => {
       wardNo: registration.wardNo || registration.ward,
       aadhaar: registration.aadhaar || registration.aadhar,
       village: registration.village || "",
+      eventType: registration.eventType || "",
+      eventCategory: registration.eventCategory || "",
     });
   };
 
@@ -250,6 +271,7 @@ const AppliedTeams = () => {
         name === "numPlayers" || name === "weight"
           ? Math.max(0, parseInt(value) || 0)
           : value,
+      ...(name === "eventType" && { eventCategory: "" }), // Reset category when type changes
     }));
   };
 
@@ -344,7 +366,10 @@ const AppliedTeams = () => {
                   <th className="p-3 text-left">Weight</th>
                 )}
                 {tableFilter === "raceRegistrations" && (
-                  <th className="p-3 text-left">Race Type</th>
+                  <>
+                    <th className="p-3 text-left">Event Type</th>
+                    <th className="p-3 text-left">Event Category</th>
+                  </>
                 )}
                 <th className="p-3 text-left">Father</th>
                 <th className="p-3 text-left">Gender</th>
@@ -406,17 +431,42 @@ const AppliedTeams = () => {
                         </td>
                       )}
                       {tableFilter === "raceRegistrations" && (
-                        <td className="p-3">
-                          <select
-                            name="raceDistance"
-                            value={editForm.raceDistance || ""}
-                            onChange={handleEditChange}
-                            className="w-full p-1 border rounded"
-                          >
-                            <option value="5 km">5 km</option>
-                            <option value="10 km">10 km</option>
-                          </select>
-                        </td>
+                        <>
+                          <td className="p-3">
+                            <select
+                              name="eventType"
+                              value={editForm.eventType || ""}
+                              onChange={handleEditChange}
+                              className="w-full p-1 border rounded"
+                            >
+                              <option value="">Select Event Type</option>
+                              {Object.keys(raceEvents).map((type) => (
+                                <option key={type} value={type}>
+                                  {type}
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className="p-3">
+                            <select
+                              name="eventCategory"
+                              value={editForm.eventCategory || ""}
+                              onChange={handleEditChange}
+                              className="w-full p-1 border rounded"
+                              disabled={!editForm.eventType}
+                            >
+                              <option value="">Select Event Category</option>
+                              {editForm.eventType &&
+                                raceEvents[editForm.eventType].map(
+                                  (category) => (
+                                    <option key={category} value={category}>
+                                      {category}
+                                    </option>
+                                  )
+                                )}
+                            </select>
+                          </td>
+                        </>
                       )}
                       <td className="p-3">
                         <input
@@ -435,6 +485,7 @@ const AppliedTeams = () => {
                         >
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
+                          <option value="Other">Other</option>
                         </select>
                       </td>
                       <td className="p-3">
@@ -522,7 +573,10 @@ const AppliedTeams = () => {
                         </td>
                       )}
                       {tableFilter === "raceRegistrations" && (
-                        <td className="p-3">{reg.raceDistance || "N/A"}</td>
+                        <>
+                          <td className="p-3">{reg.eventType || "N/A"}</td>
+                          <td className="p-3">{reg.eventCategory || "N/A"}</td>
+                        </>
                       )}
                       <td className="p-3">{reg.fatherName || "N/A"}</td>
                       <td className="p-3">{reg.gender || "N/A"}</td>
@@ -530,7 +584,9 @@ const AppliedTeams = () => {
                       <td className="p-3">{reg.wardNo || reg.ward || "N/A"}</td>
                       <td className="p-3">{reg.block || "N/A"}</td>
                       <td className="p-3">{reg.village || "N/A"}</td>
-                      <td className="p-3">{reg.aadhaar || reg.aadhar || "N/A"}</td>
+                      <td className="p-3">
+                        {reg.aadhaar || reg.aadhar || "N/A"}
+                      </td>
                       <td className="p-3">{reg.mobile || "N/A"}</td>
                       <td className="p-3 space-x-2">
                         {reg.entryFormUrl && (

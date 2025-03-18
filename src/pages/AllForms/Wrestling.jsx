@@ -9,12 +9,6 @@ import { Link } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig"; // Adjust the path to your firebase config file
 import { ref, push, set } from "firebase/database";
 
-// const blockVillageData = {
-//   Nuh: ["Untka", "Adbar", "Akera"],
-//   Punahana: ["Aminabad", "Andhaki", "Badli"],
-//   Pingwan: ["Akbarpur", "Anchwari", "Aoutha"],
-// };
-
 const blockVillageData = {
   Nuh: [
     "Untka",
@@ -453,7 +447,7 @@ const Wrestling = () => {
     setSuccess(false);
 
     // Basic validation for weight
-    if (formData.weight < 50 || formData.weight > 130) {
+    if (formData.weight && (formData.weight < 50 || formData.weight > 130)) {
       setError("Weight must be between 50 and 130 KG");
       setLoading(false);
       return;
@@ -601,9 +595,10 @@ const Wrestling = () => {
               <div className="mb-4">
                 <label className="block text-gray-700">Weight Category</label>
                 <select
+                  name="weight"  // Added name attribute
                   className="w-full p-2 border rounded-lg bg-white text-black"
                   value={formData.weight}
-                  onChange={(e) => setWeight(e.target.value)}
+                  onChange={handleInputChange}  // Changed to handleInputChange
                   required
                 >
                   <option value="">Select Weight*</option>

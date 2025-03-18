@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
 import { ref, push, set } from "firebase/database";
 
-// Block and Village Data
+// Block and Village Data (unchanged, omitted for brevity)
 const blockVillageData = {
   Nuh: [
     "Untka",
@@ -362,7 +362,7 @@ const events = {
     "3000 Mtr.",
   ],
   Jumping: ["Long Jump", "Triple Jump"],
-  Throwing: ["Discuss Throw", "Shot Put", "Javelin Throw"],
+  Throwing: ["Discus Throw", "Shot Put", "Javelin Throw"], // Fixed "Discuss" typo
 };
 
 const Race = () => {
@@ -375,7 +375,6 @@ const Race = () => {
     block: "",
     village: "",
     wardNo: "",
-    raceDistance: "",
     aadhaar: "",
     mobile: "",
     entryForm: null,
@@ -396,16 +395,6 @@ const Race = () => {
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
 
-    // Handle event type and category specifically
-    if (name === "eventType") {
-      setFormData({
-        ...formData,
-        [name]: value,
-        eventCategory: "", // Reset category when type changes
-      });
-      return;
-    }
-
     if (name === "aadhaar") {
       const aadhaarValue = value.replace(/\D/g, "").slice(0, 12);
       setFormData({ ...formData, [name]: aadhaarValue });
@@ -423,7 +412,11 @@ const Race = () => {
         setError(null);
       }
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+        ...(name === "eventType" && { eventCategory: "" }), // Reset category when type changes
+      }));
     }
   };
 
@@ -475,17 +468,22 @@ const Race = () => {
     setSuccess(false);
 
     try {
-      // Validate required files
-      if (!formData.entryForm || !formData.sarpanchPerforma) {
-        throw new Error("Please upload a form below 300KB");
+      // Validate required fields
+      if (!formData.eventType || !formData.eventCategory) {
+        throw new Error("Please select both Event Type and Event Category");
       }
+      if (!formData.entryForm || !formData.sarpanchPerforma) {
+        throw new Error("Please upload both Entry Form and Sarpanch Performa");
+      }
+
+      // Debug formData
+      console.log("Form Data before submission:", formData);
 
       // Upload files to Cloudinary
       const entryFormUrl = await uploadToCloudinary(
         formData.entryForm,
         "Entry Form"
       );
-
       const sarpanchPerformaUrl = await uploadToCloudinary(
         formData.sarpanchPerforma,
         "Sarpanch Performa"
@@ -507,7 +505,6 @@ const Race = () => {
       await set(newRegistrationRef, registrationData);
 
       setSuccess(true);
-      // Reset form
       setFormData({
         teamName: "",
         playerName: "",
@@ -517,7 +514,6 @@ const Race = () => {
         block: "",
         village: "",
         wardNo: "",
-        raceDistance: "",
         aadhaar: "",
         mobile: "",
         entryForm: null,
@@ -579,7 +575,7 @@ const Race = () => {
             )}
 
             <form onSubmit={handleSubmit}>
-              {/* New Event Type Field */}
+              {/* Event Type Field */}
               <div className="mb-4">
                 <label className="block text-gray-700">Event Type</label>
                 <select
