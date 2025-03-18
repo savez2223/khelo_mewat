@@ -595,13 +595,13 @@ const Wrestling = () => {
               <div className="mb-4">
                 <label className="block text-gray-700">Weight Category</label>
                 <select
-                  name="weight"  // Added name attribute
+                  name="weight"
                   className="w-full p-2 border rounded-lg bg-white text-black"
                   value={formData.weight}
-                  onChange={handleInputChange}  // Changed to handleInputChange
+                  onChange={handleInputChange}
                   required
                 >
-                  <option value="">Select Weight*</option>
+                  <option value="">Select Weight</option>
                   <option value="45">45 Kg</option>
                   <option value="50">50 Kg</option>
                   <option value="55">55 Kg</option>
