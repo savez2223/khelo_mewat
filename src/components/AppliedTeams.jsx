@@ -27,7 +27,6 @@ const AppliedTeams = () => {
     { value: "volleyballRegistrations", label: "Volleyball" },
   ];
 
-  // Race-specific event types and categories (from Race component)
   const raceEvents = {
     Running: [
       "100 Mtr.",
@@ -132,33 +131,63 @@ const AppliedTeams = () => {
       unit: "mm",
       format: "a4",
     });
+
+    // Metadata
+    doc.setProperties({
+      title: `${
+        sportOptions.find((opt) => opt.value === tableFilter)?.label
+      } Registrations Report`,
+      author: "Sports Management System",
+      creator: "Admin Panel",
+    });
+
     const downloadDate = new Date().toLocaleDateString("en-IN", {
       day: "2-digit",
       month: "short",
       year: "numeric",
     });
 
-    const logoWidth = 30;
-    const logoHeight = 30;
+    // Header
+    const logoWidth = 20;
+    const logoHeight = 20;
+    const pageWidth = doc.internal.pageSize.width;
     doc.addImage(logoImage, "PNG", 10, 10, logoWidth, logoHeight);
 
-    doc.setFontSize(20);
-    doc.setTextColor(57, 169, 53);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.setTextColor(57, 169, 53); // Green color
     doc.text(
       `${
         sportOptions.find((opt) => opt.value === tableFilter)?.label
       } Registrations Report`,
-      50,
-      25
+      pageWidth / 2,
+      20,
+      { align: "center" }
     );
-    doc.setFontSize(12);
-    doc.setTextColor(100);
-    doc.text(`Generated on: ${downloadDate}`, 50, 35);
 
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(100); // Gray color
+    doc.text(`Generated on: ${downloadDate}`, pageWidth - 10, 25, {
+      align: "right",
+    });
+
+    if (startDate || endDate) {
+      doc.text(
+        `Date Range: ${startDate || "N/A"} to ${endDate || "N/A"}`,
+        10,
+        35
+      );
+    }
+
+    // Table Columns
     const columns = [
       { title: "Team", dataKey: "teamName" },
       { title: "Player", dataKey: "playerName" },
       { title: "Players Count", dataKey: "numPlayers" },
+      ...(tableFilter === "wrestlingRegistrations"
+        ? [{ title: "Weight (kg)", dataKey: "weight" }]
+        : []),
       ...(tableFilter === "raceRegistrations"
         ? [
             { title: "Event Type", dataKey: "eventType" },
@@ -180,74 +209,98 @@ const AppliedTeams = () => {
         !["cricketRegistrations", "tugofwarRegistrations"].includes(tableFilter)
       )
         return false;
+      if (col.dataKey === "weight" && tableFilter !== "wrestlingRegistrations")
+        return false;
       return true;
     });
 
+    // Table Data
+    const tableData = filteredRegistrations.map((reg) => ({
+      teamName: reg.teamName || "N/A",
+      playerName: reg.playerName || "N/A",
+      numPlayers: reg.numPlayers || "N/A",
+      weight: reg.weight ? `${reg.weight} kg` : "N/A",
+      eventType: reg.eventType || "N/A",
+      eventCategory: reg.eventCategory || "N/A",
+      fatherName: reg.fatherName || "N/A",
+      gender: reg.gender || "N/A",
+      dob: reg.dob || "N/A",
+      ward: reg.wardNo || reg.ward || "N/A",
+      block: reg.block || "N/A",
+      village: reg.village || "N/A",
+      aadhaar: reg.aadhaar || reg.aadhar || "N/A",
+      mobile: reg.mobile || "N/A",
+      timestamp: reg.timestamp
+        ? new Date(reg.timestamp).toLocaleString()
+        : "N/A",
+    }));
+
+    // AutoTable Configuration
     doc.autoTable({
       columns: columns,
-      body: filteredRegistrations.map((reg) => ({
-        teamName: reg.teamName || "N/A",
-        playerName: reg.playerName || "N/A",
-        numPlayers: reg.numPlayers || "N/A",
-        eventType: reg.eventType || "N/A",
-        eventCategory: reg.eventCategory || "N/A",
-        fatherName: reg.fatherName || "N/A",
-        gender: reg.gender || "N/A",
-        dob: reg.dob || "N/A",
-        ward: reg.wardNo || reg.ward || "N/A",
-        block: reg.block || "N/A",
-        village: reg.village || "N/A",
-        aadhaar: reg.aadhaar || reg.aadhar || "N/A",
-        mobile: reg.mobile || "N/A",
-        timestamp: reg.timestamp
-          ? new Date(reg.timestamp).toLocaleString()
-          : "N/A",
-      })),
-      startY: 50,
-      theme: "grid",
+      body: tableData,
+      startY: startDate || endDate ? 40 : 35, // Adjust start position based on date range
+      theme: "striped", // Professional striped theme
       styles: {
-        fontSize: 10,
-        cellPadding: 3,
+        font: "helvetica",
+        fontSize: 8,
+        cellPadding: 2,
         overflow: "linebreak",
         halign: "center",
+        valign: "middle",
       },
       headStyles: {
-        fillColor: [57, 169, 53],
-        textColor: 255,
-        fontSize: 12,
+        fillColor: [57, 169, 53], // Green header
+        textColor: [255, 255, 255], // White text
+        fontSize: 9,
+        fontStyle: "bold",
         halign: "center",
       },
       bodyStyles: {
-        textColor: 50,
-        lineColor: [150, 150, 150],
+        textColor: [50, 50, 50], // Dark gray text
+        lineColor: [200, 200, 200], // Light gray borders
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245], // Light gray for alternate rows
       },
       columnStyles: {
-        teamName: { cellWidth: 25 },
-        playerName: { cellWidth: 25 },
-        numPlayers: { cellWidth: 20 },
-        eventType: { cellWidth: 25 },
-        eventCategory: { cellWidth: 25 },
-        fatherName: { cellWidth: 25 },
-        gender: { cellWidth: 20 },
+        teamName: { cellWidth: 20 },
+        playerName: { cellWidth: 20 },
+        numPlayers: { cellWidth: 15 },
+        weight: { cellWidth: 15 },
+        eventType: { cellWidth: 20 },
+        eventCategory: { cellWidth: 20 },
+        fatherName: { cellWidth: 20 },
+        gender: { cellWidth: 15 },
         dob: { cellWidth: 20 },
-        ward: { cellWidth: 20 },
+        ward: { cellWidth: 15 },
         block: { cellWidth: 20 },
-        village: { cellWidth: 25 },
+        village: { cellWidth: 20 },
         aadhaar: { cellWidth: 25 },
-        mobile: { cellWidth: 25 },
-        timestamp: { cellWidth: 30 },
+        mobile: { cellWidth: 20 },
+        timestamp: { cellWidth: 25 },
       },
+      margin: { top: 40, left: 10, right: 10, bottom: 20 },
       didDrawPage: (data) => {
-        doc.setFontSize(10);
+        // Footer
+        doc.setFontSize(8);
+        doc.setTextColor(100);
         doc.text(
-          `Page ${doc.internal.getNumberOfPages()}`,
-          doc.internal.pageSize.width / 2,
+          `Page ${doc.internal.getNumberOfPages()} | Generated on: ${downloadDate}`,
+          pageWidth / 2,
           doc.internal.pageSize.height - 10,
           { align: "center" }
         );
       },
     });
 
+    // Summary at the end
+    const finalY = doc.lastAutoTable.finalY + 10;
+    doc.setFontSize(10);
+    doc.setTextColor(57, 169, 53);
+    doc.text(`Total Registrations: ${filteredRegistrations.length}`, 10, finalY);
+
+    // Save the PDF
     doc.save(`${tableFilter}_report_${downloadDate}.pdf`);
   };
 
