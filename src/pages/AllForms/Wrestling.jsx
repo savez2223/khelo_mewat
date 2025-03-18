@@ -9,12 +9,6 @@ import { Link } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig"; // Adjust the path to your firebase config file
 import { ref, push, set } from "firebase/database";
 
-// const blockVillageData = {
-//   Nuh: ["Untka", "Adbar", "Akera"],
-//   Punahana: ["Aminabad", "Andhaki", "Badli"],
-//   Pingwan: ["Akbarpur", "Anchwari", "Aoutha"],
-// };
-
 const blockVillageData = {
   Nuh: [
     "Untka",
@@ -601,12 +595,13 @@ const Wrestling = () => {
               <div className="mb-4">
                 <label className="block text-gray-700">Weight Category</label>
                 <select
+                  name="weight"
                   className="w-full p-2 border rounded-lg bg-white text-black"
                   value={formData.weight}
-                  onChange={(e) => setWeight(e.target.value)}
+                  onChange={handleInputChange}
                   required
                 >
-                  <option value="">Select Weight*</option>
+                  <option value="">Select Weight</option>
                   <option value="45">45 Kg</option>
                   <option value="50">50 Kg</option>
                   <option value="55">55 Kg</option>
