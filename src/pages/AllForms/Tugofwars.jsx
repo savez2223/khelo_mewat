@@ -364,7 +364,7 @@ const Tugofwars = () => {
     aadhaar: "",
     mobile: "",
     entryForm: null,
-    sarpanchPerforma: null
+    sarpanchPerforma: null,
   });
   const [villages, setVillages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -420,12 +420,18 @@ const Tugofwars = () => {
       });
       const data = await response.json();
       if (!data.secure_url) {
-        throw new Error(`Cloudinary upload failed for ${fileType}: ${data.error?.message || 'Unknown error'}`);
+        throw new Error(
+          `Cloudinary upload failed for ${fileType}: ${
+            data.error?.message || "Unknown error"
+          }`
+        );
       }
       console.log(`${fileType} uploaded successfully: ${data.secure_url}`);
       return data.secure_url;
     } catch (err) {
-      throw new Error(`Cloudinary upload failed for ${fileType}: ${err.message}`);
+      throw new Error(
+        `Cloudinary upload failed for ${fileType}: ${err.message}`
+      );
     }
   };
 
@@ -442,8 +448,14 @@ const Tugofwars = () => {
       }
 
       // Upload files to Cloudinary
-      const entryFormUrl = await uploadToCloudinary(formData.entryForm, "Entry Form");
-      const sarpanchPerformaUrl = await uploadToCloudinary(formData.sarpanchPerforma, "Sarpanch Performa");
+      const entryFormUrl = await uploadToCloudinary(
+        formData.entryForm,
+        "Entry Form"
+      );
+      const sarpanchPerformaUrl = await uploadToCloudinary(
+        formData.sarpanchPerforma,
+        "Sarpanch Performa"
+      );
 
       // Prepare data for Firebase
       const registrationData = {
@@ -460,12 +472,12 @@ const Tugofwars = () => {
         mobile: formData.mobile,
         entryFormUrl: entryFormUrl,
         sarpanchPerformaUrl: sarpanchPerformaUrl,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       console.log("Data to be sent to Firebase:", registrationData);
 
-      const tugofwarRef = ref(db, 'tugofwarRegistrations');
+      const tugofwarRef = ref(db, "tugofwarRegistrations");
       const newRegistrationRef = push(tugofwarRef);
 
       await set(newRegistrationRef, registrationData);
@@ -484,7 +496,7 @@ const Tugofwars = () => {
         aadhaar: "",
         mobile: "",
         entryForm: null,
-        sarpanchPerforma: null
+        sarpanchPerforma: null,
       });
       setVillages([]);
     } catch (err) {
@@ -496,18 +508,30 @@ const Tugofwars = () => {
   };
 
   return (
-    <div className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10" id="participate-now">
+    <div
+      className="bg-[#F5F6F5] pb-10 lg:pb-20 md:pt-12 mt-10"
+      id="participate-now"
+    >
       <Helmet>
         <title>Apply for Tug of War - Khelo Mewat</title>
       </Helmet>
       <ScrollPageTop />
       <Container>
-        <SectionHeader heading={<span style={{ color: "#E87722" }}>Apply for Tug of War</span>} />
+        <SectionHeader
+          heading={
+            <span style={{ color: "#E87722" }}>Apply for Tug of War</span>
+          }
+        />
 
         <FadeInAnimation>
           <div className="flex justify-center items-center md:mb-10 mb-5">
             <Link to={"/"}>
-              <img className="w-40 md:w-48" src={logo} alt="Khelo Mewat Logo" loading="lazy" />
+              <img
+                className="w-40 md:w-48"
+                src={logo}
+                alt="Khelo Mewat Logo"
+                loading="lazy"
+              />
             </Link>
           </div>
         </FadeInAnimation>
@@ -517,6 +541,11 @@ const Tugofwars = () => {
             <h2 className="text-xl font-bold text-[#39A935] mb-4">
               Tug of War Registration Form
             </h2>
+            <p className="text-red-600 text-lg font-bold mt-4">
+              Last Date to Apply: 15 April 2025
+            </p>
+
+            <br></br>
 
             {success && (
               <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
@@ -663,7 +692,9 @@ const Tugofwars = () => {
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-700">Captain Aadhaar Number</label>
+                <label className="block text-gray-700">
+                  Captain Aadhaar Number
+                </label>
                 <input
                   type="text"
                   name="aadhaar"
@@ -676,7 +707,9 @@ const Tugofwars = () => {
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-700">Captain Mobile Number</label>
+                <label className="block text-gray-700">
+                  Captain Mobile Number
+                </label>
                 <input
                   type="tel"
                   name="mobile"
@@ -690,12 +723,12 @@ const Tugofwars = () => {
 
               <div className="mb-4">
                 <label className="block text-gray-700 font-medium">
-                  Entry Form (PDF, Max 300KB)
+                  Entry Form (PDF, JPG, JPEG)
                 </label>
                 <input
                   type="file"
                   name="entryForm"
-                  accept="application/pdf"
+                  accept="application/pdf,image/jpeg,image/jpg"
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-lg text-black"
                   required
@@ -704,12 +737,12 @@ const Tugofwars = () => {
 
               <div className="mb-4">
                 <label className="block text-gray-700 font-medium">
-                  Sarpanch Performa (PDF, Max 300KB)
+                  Sarpanch Performa (PDF, JPG, JPEG)
                 </label>
                 <input
                   type="file"
                   name="sarpanchPerforma"
-                  accept="application/pdf"
+                  accept="application/pdf,image/jpeg,image/jpg"
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-lg text-black"
                   required
@@ -720,10 +753,12 @@ const Tugofwars = () => {
                 type="submit"
                 disabled={loading || error !== null}
                 className={`bg-[#E87722] text-white px-4 py-2 rounded-lg w-full hover:bg-[#39A935] ${
-                  (loading || error !== null) ? 'opacity-50 cursor-not-allowed' : ''
+                  loading || error !== null
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
                 }`}
               >
-                {loading ? 'Submitting...' : 'Submit Application'}
+                {loading ? "Submitting..." : "Submit Application"}
               </button>
             </form>
           </div>

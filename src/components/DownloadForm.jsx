@@ -28,6 +28,9 @@ const DownloadForms = () => {
           <p className="text-gray-700 text-base mt-3 font-medium max-w-2xl mx-auto">
             Access and download essential forms conveniently from this section.
           </p>
+          <p className="text-red-600 text-lg font-bold mt-4">
+            Last Date to Apply: 15 April 2025
+          </p>
         </div>
 
         <div className="flex flex-col md:flex-row gap-12 justify-center items-center">
