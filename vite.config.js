@@ -12,8 +12,8 @@ export default defineConfig({
   build: {
     outDir: "dist",
   },
+  // 👇 Add this for Vite + client-side routing fallback on localhost (optional)
   server: {
-    // This is optional for dev, mostly helpful for localhost testing
     historyApiFallback: true,
   },
 });
